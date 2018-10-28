@@ -1,0 +1,1 @@
+This folder contains code for parts of the game that are being developed as separate functions and will be integrated in the game when needed.
