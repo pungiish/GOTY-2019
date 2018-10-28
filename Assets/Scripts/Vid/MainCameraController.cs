@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainCameraController : MonoBehaviour {
     public float speed;
+    public int maxX;
+    public int maxY;
     private int screenWidth;
     private int screenHeight;
 
@@ -18,16 +20,16 @@ public class MainCameraController : MonoBehaviour {
         int tempY = (int)((Input.mousePosition.y / Screen.height) * 100);
         // Debug.Log(tempX + " " + tempY);
 
-        if (tempX > 90) { // right
+        if (tempX > 90 && camPos.x < maxX) { // right
             camPos.x += speed * Time.deltaTime;
         }
-        if (tempX < 10) { // left
+        if (tempX < 10 && camPos.x > -maxX) { // left
             camPos.x -= speed * Time.deltaTime;
         }
-        if (tempY > 90) { // up
+        if (tempY > 90 && camPos.y < maxY) { // up
             camPos.y += speed * Time.deltaTime;
         }
-        if (tempY < 10) { // down
+        if (tempY < 10 && camPos.y > -maxY) { // down
             camPos.y -= speed * Time.deltaTime;
         }
         transform.position = camPos;

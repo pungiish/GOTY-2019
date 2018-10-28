@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class GameTile : Tile {
     public enum TileColor { red, green };
-    public enum TileType { ground, water, forest, mountain };
+    public enum TileType { ground, water, forest, mountain, border };
 
     private int x;
     private int y;
