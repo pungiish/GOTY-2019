@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class MapController : MonoBehaviour {
+    public Sprite[] groundTextures;
+    public Sprite[] waterTextures;
+    public Sprite[] forestTextures;
+    public Sprite[] mountainTextures;
+    public Sprite highlightTexture;
+
     public int width;
     public int height;
     public Tilemap map;
@@ -30,14 +36,10 @@ public class MapController : MonoBehaviour {
     }
 
     private void startMapGenerator() {
+        MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, this);
+        mapGenerator.generateMap();
 
-        map.SetTile(new Vector3Int(0, 0, 0), new GameTile(0, 0, GameTile.TileType.ground, ground.sprite)); // test purposes
-        //highlight.SetTile(new Vector3Int(0, 0, 0), new GameTile(0, 0, GameTile.TileType.border, border.sprite)); // test purposes
-
-        // map generation here
-        MapGenerator.generateMap(ref map);
         //hideTileBorders();
-        //showTileBorders();
     }
 
     public GameTile getTileAt(int x, int y) {

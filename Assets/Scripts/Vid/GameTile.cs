@@ -13,12 +13,15 @@ public class GameTile : Tile {
     private TileColor colorTag;
     // private Warrior warrior; is warrior on this tile
 
-    public GameTile(int x, int y, TileType tp, Sprite s) {
+    // this method is 'constructor' - used in ScriptableObject.CreateInstance
+    public GameTile init(int x, int y, TileType tp, ref Sprite s) {
         this.x = x;
         this.y = y;
         this.type = tp;
         this.sprite = s;
         this.colorTag = TileColor.green;
+
+        return this;
     }
 
     bool isOccupied() {

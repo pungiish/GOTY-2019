@@ -249,8 +249,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4fdaa81ff08e6e4291d94ff8bf3980a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 250
-  height: 250
+  groundTextures:
+  - {fileID: 21300000, guid: cead09e360b474b469f9c18056057e11, type: 3}
+  waterTextures:
+  - {fileID: 21300000, guid: 278fd0437dac3c744ae4f718e9e1cb46, type: 3}
+  forestTextures:
+  - {fileID: 21300000, guid: 9f24c9a00791fb94eaecabbd2cb265db, type: 3}
+  mountainTextures:
+  - {fileID: 21300000, guid: 6c52d68efd8523643b0319622f5576c3, type: 3}
+  highlightTexture: {fileID: 21300000, guid: 3f8dc95667f1a90428de43cff15104d5, type: 3}
+  width: 61
+  height: 61
   map: {fileID: 1195260490}
   highlight: {fileID: 1062713532}
   ground: {fileID: 11400000, guid: c47f36fc16f84f342ba6576a4e6477ac, type: 2}
@@ -280,7 +289,7 @@ Transform:
   m_GameObject: {fileID: 1062713529}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1064150405}
   m_RootOrder: 1
@@ -451,7 +460,7 @@ Transform:
   m_GameObject: {fileID: 1195260487}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1064150405}
   m_RootOrder: 0
