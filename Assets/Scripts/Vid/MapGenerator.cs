@@ -37,6 +37,9 @@ public class MapGenerator : object {
 
         // forest
         createForest();
+
+        // mountain
+        createMountain();
     }
 
     private void createGround(int x, int y, ref Tilemap map) {
@@ -72,7 +75,7 @@ public class MapGenerator : object {
         position.y = y1;
         for (int i = minX; i <= maxX; i++) {
             position.x = i;
-            map.SetTile(position, ScriptableObject.CreateInstance<GameTile>().init(i, y1, GameTile.TileType.water, ref mapController.waterTextures[mapIndex]));
+            setTile(position, GameTile.TileType.water, ref mapController.waterTextures[mapIndex]);
         }
 
         int minY = (y1 < y2) ? y1 : y2;
@@ -81,16 +84,16 @@ public class MapGenerator : object {
         position.x = x2;
         for (int i = minY; i <= maxY; i++) {
             position.y = i;
-            map.SetTile(position, ScriptableObject.CreateInstance<GameTile>().init(x2, i, GameTile.TileType.water, ref mapController.waterTextures[mapIndex]));
+            setTile(position, GameTile.TileType.water, ref mapController.waterTextures[mapIndex]);
         }
     }
 
     private void createForest() {
-        int forestCounter = Random.Range(2, 5);
+        int forestCounter = Random.Range(5, 7);
         int width, startX, startY;
 
         for (int i = 0; i < forestCounter; i++) {
-            width = Random.Range(2, 4);
+            width = Random.Range(4, 6);
 
             startX = Random.Range(-maxX + 2, maxX - 2);
             startY = Random.Range(-maxY + 2, maxY - 2);
@@ -100,20 +103,49 @@ public class MapGenerator : object {
     }
 
     private void spreadForest(int x1, int y1, int width) {
-        int length = Random.Range(3, 6);
+        int length = Random.Range(4, 6);
+        Vector3Int pos = new Vector3Int(0, 0, 0);
 
         for (int i = 0; i < length; i++) {
-            if (x1 - i < -maxX || x1 + i > maxX) break;
-
             for (int j = 0; j < width; j++) {
-                if (y1 - j < -maxY || y1 + j > maxY) break;
+                if (x1 - i >= -maxX) {
+                    pos.x = x1 - i;
 
-                if () // TODO - hasTile kar preveriš, če je že zaseden tile
+                    if (y1 - j >= -maxY) {
+                        pos.y = y1 - j;
+                        setTile(pos, GameTile.TileType.forest, ref mapController.forestTextures[mapIndex]);
+                    }
+
+                    if (y1 + j <= maxY) {
+                        pos.y = y1 + j;
+                        setTile(pos, GameTile.TileType.forest, ref mapController.forestTextures[mapIndex]);
+                    }
+
+                }
+                if (x1 + i <= maxX) {
+                    pos.x = x1 + i;
+
+                    if (y1 - j >= -maxY) {
+                        pos.y = y1 - j;
+                        setTile(pos, GameTile.TileType.forest, ref mapController.forestTextures[mapIndex]);
+                    }
+
+                    if (y1 + j <= maxY) {
+                        pos.y = y1 + j;
+                        setTile(pos, GameTile.TileType.forest, ref mapController.forestTextures[mapIndex]);
+                    }
+                }
             }
         }
     }
 
-    private void createMountain(int x, int y, ref Tilemap map) {
+    private void setTile(Vector3Int position, GameTile.TileType type, ref Sprite texture) {
+        if (!map.HasTile(position)) {
+            map.SetTile(position, ScriptableObject.CreateInstance<GameTile>().init(position.x, position.y, type, ref texture));
+        }
+    }
+
+    private void createMountain() {
         // mountain generation
     }
 }
