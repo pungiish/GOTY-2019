@@ -10,40 +10,26 @@ public class MapController : MonoBehaviour {
     public Sprite[] mountainTextures;
     public Sprite highlightTexture;
 
-    public int width;
-    public int height;
+    private int width;
+    private int height;
     public Tilemap map;
     public Tilemap highlight;
-    public Tile ground;
-    public Tile border;
 
-    /*MapController(int w, int h) {
-     * v konstruktorju se bomo nastavili vsi podatki za MapController in potem se bo klical startMapGenerator
+    public void startMapGenerator(int w, int h) {
         width = w;
         height = h;
 
-        map = new Tilemap();
-        map.size = new Vector3Int(width, height, 0);
-
-        startMapGenerator();
-    }*/
-
-    private void Start() { // test purposes
         map.size = new Vector3Int(width, height, 0);
         highlight.size = new Vector3Int(width, height, 0);
 
-        startMapGenerator();
-    }
-
-    private void startMapGenerator() {
         MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, this);
         mapGenerator.generateMap();
 
-        //hideTileBorders();
+        hideTileBorders();
     }
 
-    public GameTile getTileAt(int x, int y) {
-        return map.GetTile(new Vector3Int(x, y, 0)) as GameTile;
+    public GameTile getTileAt(Vector3Int position) {
+        return map.GetTile(position) as GameTile;
     }
 
     public void showTileBorders() {

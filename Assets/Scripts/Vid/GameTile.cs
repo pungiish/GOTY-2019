@@ -32,4 +32,8 @@ public class GameTile : Tile {
     void changeColor(TileColor c) {
         this.colorTag = c;
     }
+
+    public TileType getType() {
+        return type;
+    }
 }

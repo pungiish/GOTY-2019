@@ -5,21 +5,15 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
     //private List<PlayerController> players;
     private bool playSound;
-    private MapController gameMap;
-
-	// Use this for initialization
+    public MapController gameMap;
+    public int width;
+    public int height;
+    
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+        generateMap();
 	}
 
-    private void runGame() {
-
+    private void generateMap() {
+        gameMap.startMapGenerator(width, height);
     }
-
-
 }

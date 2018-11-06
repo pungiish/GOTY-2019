@@ -125,6 +125,8 @@ GameObject:
   - component: {fileID: 534799534}
   - component: {fileID: 534799533}
   - component: {fileID: 534799537}
+  - component: {fileID: 534799538}
+  - component: {fileID: 534799539}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -209,41 +211,26 @@ MonoBehaviour:
   speed: 7.5
   maxX: 30
   maxY: 30
---- !u!1 &722462617
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 722462618}
-  - component: {fileID: 722462619}
-  m_Layer: 0
-  m_Name: TileTester
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &722462618
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 722462617}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &722462619
+--- !u!114 &534799538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 722462617}
+  m_GameObject: {fileID: 534799532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d28e8ab161aa5947b3d2b64b73730cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMap: {fileID: 534799539}
+  width: 41
+  height: 41
+--- !u!114 &534799539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 534799532}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4fdaa81ff08e6e4291d94ff8bf3980a, type: 3}
@@ -258,12 +245,8 @@ MonoBehaviour:
   mountainTextures:
   - {fileID: 21300000, guid: 6c52d68efd8523643b0319622f5576c3, type: 3}
   highlightTexture: {fileID: 21300000, guid: 3f8dc95667f1a90428de43cff15104d5, type: 3}
-  width: 61
-  height: 61
   map: {fileID: 1195260490}
   highlight: {fileID: 1062713532}
-  ground: {fileID: 11400000, guid: c47f36fc16f84f342ba6576a4e6477ac, type: 2}
-  border: {fileID: 11400000, guid: 376096671faa31f408418b8ae1205658, type: 2}
 --- !u!1 &1062713529
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 1062713529}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1064150405}
   m_RootOrder: 1
@@ -433,7 +416,7 @@ Transform:
   - {fileID: 1195260488}
   - {fileID: 1062713530}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1195260487
 GameObject:
@@ -460,7 +443,7 @@ Transform:
   m_GameObject: {fileID: 1195260487}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1064150405}
   m_RootOrder: 0
