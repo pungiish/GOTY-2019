@@ -7,8 +7,13 @@ namespace PathFinding
 {
     //Zaenkrat sem v razred Warrior dodal samo spremenljivke, ki so potrebne za path finding.
     //Ce bo smiselno, bom ob razsiritvi tega razreda, del za iskanje poti premaknil v podrazred
-    class Warrior
+    abstract class Warrior
     {
+        public const int INF = Int32.MaxValue;
+        public const int INF_WEIGHT = INF - 1;
+        protected int MoveRange = -1;
+        protected int Type = -1;
+        
         struct Str
         {
             public int Dist, x, y;
@@ -19,7 +24,6 @@ namespace PathFinding
                 this.y = y;
             }
         }
-        private const int INF = Int32.MaxValue;
         private readonly int[,] premik = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
         int CurrX, CurrY; //to je zacasna resitev, v koncnem izdelku bo imela enota referenco na Tile na katerem se nahaja
         private static bool InBounds(int x, int y, int indexPremika, Tile[,] map)
@@ -46,7 +50,6 @@ namespace PathFinding
             }
             return b;
         }
-        public int MoveRange { get; set; }
 
         public void FindPossibleMoves(int posX, int posY, Tile[,] map)
         {
@@ -94,10 +97,10 @@ namespace PathFinding
 
                     //pri ceni premika se uposteva utez polja, na katerega gremo (in ne utez polja na katerem smo)
                     if (InBounds(nx, ny, i, map) &&
-                        s.Dist + map[nx, ny].Weight < distance[nx, ny] &&
-                        s.Dist + map[nx, ny].Weight <= MoveRange)
+                        s.Dist + WarriorsData.MoveWeights[this.Type, map[nx, ny].Type] < distance[nx, ny] &&
+                        s.Dist + WarriorsData.MoveWeights[this.Type, map[nx, ny].Type] <= MoveRange)
                     {
-                        distance[nx, ny] = s.Dist + map[nx, ny].Weight;
+                        distance[nx, ny] = s.Dist + WarriorsData.MoveWeights[this.Type, map[nx, ny].Type];
                         map[nx, ny].PrevPath = i;
                         map[nx, ny].Color = 1;
                         Pq.Add(new Str(distance[nx, ny], nx, ny));
@@ -137,6 +140,9 @@ namespace PathFinding
             }
             return path;
         }
-
+        override public string ToString()
+        {
+            return "Warrior";
+        }
     }
 }

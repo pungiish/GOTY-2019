@@ -1,0 +1,27 @@
+Warrior: Hulk
+0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 
+0 0 0 1 0 0 0 
+0 0 1 0 1 0 0 
+0 0 0 1 0 0 0 
+Ne obstaja nobena pot med podanim zacetkom in koncem.
+
+Warrior: Robin Hood
+0 0 1 1 1 0 0 
+0 1 1 1 1 1 0 
+1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 
+1 1 1 1 1 1 1 
+1 1 1 0 1 1 1 
+1 1 1 1 1 1 1 
+Path:
+3  5
+3  4
+3  3
+3  2
+3  1
+3  0
+2  0
+
