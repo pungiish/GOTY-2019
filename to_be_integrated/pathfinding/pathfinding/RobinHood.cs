@@ -12,11 +12,12 @@ namespace PathFinding
         {
             this.Type = 1;
             this.MoveRange = WarriorsData.BaseMoveRanges[Type];
+            this.HealthPoints = WarriorsData.Health[Type];
         }
 
         public override string ToString()
         {
-            return base.ToString() + ": Robin Hood";
+            return base.ToString() + ": Robin Hood " + ", HP: " + HealthPoints;
         }
     }
 }

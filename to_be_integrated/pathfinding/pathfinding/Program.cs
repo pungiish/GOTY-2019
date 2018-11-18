@@ -33,6 +33,44 @@ namespace PathFinding
     {
         static void Main(string[] args)
         {
+#if INTERACTIVE
+            Console.WriteLine("Za test premika vpisite 1\nZa test bojevanja vpisite 2");
+#endif
+            string s = Console.ReadLine();
+            if (s[0] == '1')
+                PremikTest();
+            else if(s[0] == '2')
+            {
+                FightTest();
+            }
+            return;
+        }
+        static void FightTest()
+        {
+            Warrior[] warriors= new Warrior[2];
+            string s;
+
+            for (int i = 0; i < 2; ++i)
+            {
+                s = Console.ReadLine();
+                if (s == "Hulk")
+                    warriors[i] = new Hulk();
+                else if (s == "RobinHood")
+                    warriors[i] = new RobinHood();
+                else
+                    throw new Exception("Wrong warrior type");
+
+                string[] split = Console.ReadLine().Split(' ');
+                warriors[i].CurrX = Convert.ToInt32(split[0]);
+                warriors[i].CurrY = Convert.ToInt32(split[1]);
+            }
+
+            warriors[0].Fight(warriors[1]);
+            Console.WriteLine("------------------\n" + warriors[0].ToString() + "\n" + warriors[1].ToString());
+        }
+
+        static void PremikTest()
+        {
             int x, y, startx, starty, destx, desty;
 #if INTERACTIVE
             Console.WriteLine("1. vrstica: zacetna tocka figure(x, y)");

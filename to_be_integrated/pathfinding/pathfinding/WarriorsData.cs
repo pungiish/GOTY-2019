@@ -20,11 +20,36 @@ namespace PathFinding
         };
 
         public static readonly int[] BaseMoveRanges = new int[] {
-            15, //Hulk
+            15, //Hulka
             20  //Robin Hood
         };
 
+        public static readonly int[] BaseMelee = new int[]
+        {
+            30, //Hulk
+            15 //Robin Hood
+        };
 
+        public static readonly int[] Health = new int[]
+        {
+            150, //Hulk
+            100 //Robin Hood
+        };
 
+        public static readonly int[] BaseRanged = new int[]
+        {
+            0, //Hulk
+            30 //RobinHood
+        };
+        public static readonly int[] FightRange = new int[]
+        {
+            0, //Hulk
+            10 //RobinHood
+        };
+        public static readonly int[] Defence = new int[]
+        {
+            10, //Hulk
+            1 //robinHood
+        };
     }
 }

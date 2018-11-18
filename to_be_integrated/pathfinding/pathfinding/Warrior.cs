@@ -13,6 +13,7 @@ namespace PathFinding
         public const int INF_WEIGHT = INF - 1;
         protected int MoveRange = -1;
         protected int Type = -1;
+        public double HealthPoints { get; protected set; }
         
         struct Str
         {
@@ -25,7 +26,7 @@ namespace PathFinding
             }
         }
         private readonly int[,] premik = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
-        int CurrX, CurrY; //to je zacasna resitev, v koncnem izdelku bo imela enota referenco na Tile na katerem se nahaja
+        public int CurrX, CurrY; //to je zacasna resitev, v koncnem izdelku bo imela enota referenco na Tile na katerem se nahaja
         private static bool InBounds(int x, int y, int indexPremika, Tile[,] map)
         {
             bool b = false;
@@ -143,6 +144,57 @@ namespace PathFinding
         override public string ToString()
         {
             return "Warrior";
+        }
+
+        public void Fight(Warrior opponent)
+        {
+            //izracun razdalje med enotama
+            int dist = (CurrX - opponent.CurrX) * (CurrX - opponent.CurrX) + (CurrY - opponent.CurrY) * (CurrY - opponent.CurrY);
+
+            int damage, oppDamage;
+            //ranged fight
+            if (dist > 1)
+            {
+                if (dist > WarriorsData.FightRange[Type]) //ne pride do napada
+                    return;
+                else
+                    damage = WarriorsData.BaseRanged[Type];
+
+                if (dist > WarriorsData.FightRange[Type])
+                    oppDamage = 0; //nasprotnik ne more odgovoriti na napad
+                else
+                    oppDamage = WarriorsData.BaseRanged[opponent.Type];
+            }
+            else //melee fight
+            {
+                damage = WarriorsData.BaseMelee[Type];
+                oppDamage = WarriorsData.BaseMelee[opponent.Type];
+            }
+
+            //napadalec ima prednost v prvem krogu napada
+            
+            for (int i = 0; i < 2; ++i)
+            {
+                //udari prva enota - pri prvem udarcu ima "bonus presenecenja, dodatnih 50% skode
+                if(i == 0)
+                    opponent.HealthPoints -= (damage * 1.5) / (1 + 0.1 * WarriorsData.Defence[opponent.Type]);
+                else
+                    opponent.HealthPoints -= damage / (1 + 0.1 * WarriorsData.Defence[opponent.Type]);
+
+                if (opponent.HealthPoints <= 0.0)   //nasprotnik unicen
+                {
+                    Console.WriteLine("Rund " + i.ToString() + " " + this.ToString() + " | " + opponent.ToString());
+                    return;
+                }
+                //druga enota
+                if (oppDamage > 0) //ce je napadalec v dosegu orozja
+                    HealthPoints -= oppDamage / (1 + 0.1 * WarriorsData.Defence[Type]);
+
+                Console.WriteLine("Rund "+ i.ToString() + " " + this.ToString() + " | " + opponent.ToString());
+                if (HealthPoints <= 0.0) //napadalec unicen
+                    return;
+
+            }
         }
     }
 }
