@@ -9,6 +9,8 @@ public class MapController : MonoBehaviour {
     public Sprite[] forestTextures;
     public Sprite[] mountainTextures;
     public Sprite highlightTexture;
+    public GameObject[] warriors;
+    public GameObject[] buildings;
 
     private int width;
     private int height;

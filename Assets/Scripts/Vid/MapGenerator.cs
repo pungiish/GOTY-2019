@@ -21,8 +21,8 @@ public class MapGenerator : object {
         maxX = w / 2;
         maxY = h / 2;
         mapIndex = i;
-        minN = Math.Max((w * h) / 750, 1);
-        maxN = Math.Max((w * h) / 500, 1);
+        minN = Math.Max((w * h) / 500, 1);
+        maxN = Math.Max((w * h) / 250, 1);
         //Debug.Log(minN.ToString() + " " + maxN.ToString());
         map = tilemap;
         highlightMap = highlight;
@@ -59,6 +59,58 @@ public class MapGenerator : object {
 
         // ground
         createGround();
+
+        generateObjects();
+    }
+
+    private void generateObjects() {
+        setWarriorsAndBuildings();
+    }
+
+    private void buildBase(int player, Vector3Int position) {
+        //Debug.Log(position.ToString());
+        GameObject gameObject = GameObject.Instantiate(mapController.buildings[GameController.selectedWarriorAndBuilding[player]]); // potrebno se nastaviti edino kateremu igralcu pripada
+        gameObject.transform.position += position;
+        (map.GetTile(position) as GameTile).setBuilding(gameObject);
+
+        Shuffle(directions, directions.Length / 2, directions.Length);
+        for (int i = 0; i < 6 * 2; i += 2) {
+            position.x += directions[i]; position.y += directions[i + 1];
+
+            GameObject gameObject2= GameObject.Instantiate(mapController.warriors[GameController.selectedWarriorAndBuilding[player]]);
+            gameObject2.transform.position += position;
+            (map.GetTile(position) as GameTile).setWarrior(gameObject2);
+
+            position.x -= directions[i]; position.y -= directions[i + 1];
+        }
+    }
+
+    private void setWarriorsAndBuildings() {
+        int[] boundaries = { -maxX, 0, -maxY, 0, 0, maxX, 0, maxY, -maxX, 0, 0, maxY, 0, maxX, -maxY, 0  };
+        int x1, x2, y1, y2, randX, randY, offset = maxX / 3, counter;
+        Vector3Int position = Vector3Int.zero;
+
+        // tukaj bo potrebno spremeniti, da se bodo ustvarjali objekti tipa Warrior in bodo pripadali dolocenemu igralcu
+        for (counter = 0; counter < GameController.numberOfPlayers; counter++) {
+            x1 = boundaries[(counter % 4)*4]; x2 = boundaries[(counter % 4) * 4 + 1];
+            y1 = boundaries[(counter % 4) * 4 + 2]; y2 = boundaries[(counter % 4) * 4 + 3];
+
+            //Debug.Log(x1 + " " + x2 + " " + y1 + " " + y2);
+            randX = UnityEngine.Random.Range(x1 + offset, x2 - offset);
+            randY = UnityEngine.Random.Range(y1 + offset, y2 - offset);
+            //Debug.Log(i + " " + randX + " " + randY);
+
+            position.x = randX; position.y = randY;
+            buildBase(counter, position);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            if (counter < 4) {
+
+            } else {
+
+            }
+        }
     }
 
     private bool outOfMap(Vector3Int position) {

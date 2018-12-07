@@ -208,9 +208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c777bc9813d14409922411835749b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameController: {fileID: 534799538}
   speed: 7.5
-  maxX: 30
-  maxY: 30
 --- !u!114 &534799538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,8 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMap: {fileID: 534799539}
-  width: 41
-  height: 41
+  width: 31
+  height: 31
 --- !u!114 &534799539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +244,13 @@ MonoBehaviour:
   mountainTextures:
   - {fileID: 21300000, guid: 6c52d68efd8523643b0319622f5576c3, type: 3}
   highlightTexture: {fileID: 21300000, guid: 3f8dc95667f1a90428de43cff15104d5, type: 3}
+  warriors:
+  - {fileID: 1030536209844266, guid: 285aae8d44539c44f897d0ba02e27a29, type: 2}
+  - {fileID: 1988532726079294, guid: 53d1bbb086f74024a8402a72a8396073, type: 2}
+  buildings:
+  - {fileID: 1138150920884734, guid: 106662d37b87deb48a405ba7ba4d67ee, type: 2}
+  - {fileID: 1757857626694882, guid: 4167e9ed0f7a1f64fbbd6b2b7c2d83c6, type: 2}
+  - {fileID: 1378286908467254, guid: 8e7fc654405ecee47ae033ef7129359d, type: 2}
   map: {fileID: 1195260490}
   highlight: {fileID: 1062713532}
 --- !u!1 &1062713529
