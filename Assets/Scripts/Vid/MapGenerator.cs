@@ -45,11 +45,12 @@ public class MapGenerator : object {
                 position.x = i;
                 position.y = j;
 
-                highlightMap.SetTile(position, ScriptableObject.CreateInstance<GameTile>().init(i, j, GameTile.TileType.border, ref mapController.highlightTexture));
+                highlightMap.SetTile(position, ScriptableObject.CreateInstance<HighlightTile>().init(i, j, HighlightTile.TileColor.border, ref mapController.highlightTexture));
                 selected = GameObject.Instantiate(mapController.selected);
                 selected.transform.position += position;
                 selected.GetComponent<MouseController>().mapController = mapController;
                 selected.GetComponent<MouseController>().highlightMap = highlightMap;
+                selected.GetComponent<MouseController>().map = map;
             }
         }
 
@@ -76,7 +77,7 @@ public class MapGenerator : object {
         //Debug.Log(position.ToString());
         GameObject gameObject = GameObject.Instantiate(mapController.buildings[GameController.selectedWarriorAndBuilding[player]]); // potrebno se nastaviti edino kateremu igralcu pripada
         gameObject.transform.position += position;
-        (map.GetTile(position) as GameTile).setBuilding(gameObject);
+        (map.GetTile(position) as GameTile).setInGameObject(gameObject);
 
         Shuffle(directions, directions.Length / 2, directions.Length);
         for (int i = 0; i < 6 * 2; i += 2) {
@@ -84,7 +85,7 @@ public class MapGenerator : object {
 
             GameObject gameObject2= GameObject.Instantiate(mapController.warriors[GameController.selectedWarriorAndBuilding[player]]);
             gameObject2.transform.position += position;
-            (map.GetTile(position) as GameTile).setWarrior(gameObject2);
+            (map.GetTile(position) as GameTile).setInGameObject(gameObject2);
 
             position.x -= directions[i]; position.y -= directions[i + 1];
         }
@@ -132,7 +133,7 @@ public class MapGenerator : object {
 
                 GameObject gameObject = GameObject.Instantiate(mapController.buildings[mapController.buildings.Length - 1]); // potrebno se nastaviti edino kateremu igralcu pripada
                 gameObject.transform.position += position;
-                (map.GetTile(position) as GameTile).setBuilding(gameObject);
+                (map.GetTile(position) as GameTile).setInGameObject(gameObject);
 
                 counter++;
             } else {
@@ -150,7 +151,7 @@ public class MapGenerator : object {
 
                 GameObject gameObject = GameObject.Instantiate(mapController.buildings[mapController.buildings.Length - 1]); // potrebno se nastaviti edino kateremu igralcu pripada
                 gameObject.transform.position += position;
-                (map.GetTile(position) as GameTile).setBuilding(gameObject);
+                (map.GetTile(position) as GameTile).setInGameObject(gameObject);
 
                 counter++;
             }

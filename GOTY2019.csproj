@@ -239,6 +239,8 @@
     <Compile Include="Assets\Scripts\Vid\GameController.cs" />
     <Compile Include="Assets\Scripts\Vid\GameOver.cs" />
     <Compile Include="Assets\Scripts\Vid\GameTile.cs" />
+    <Compile Include="Assets\Scripts\Vid\HighlightTile.cs" />
+    <Compile Include="Assets\Scripts\Vid\LoadingScreenController.cs" />
     <Compile Include="Assets\Scripts\Vid\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\Vid\MapController.cs" />
     <Compile Include="Assets\Scripts\Vid\MapGenerator.cs" />

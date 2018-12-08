@@ -4,16 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class GameTile : Tile {
-    public enum TileColor { red, green };
     public enum TileType { ground, water, forest, mountain, border, selected };
 
     public int x { get; private set; }
     public int y { get; private set; }
     private TileType type;
-    private TileColor colorTag;
-    private GameObject warrior; // warrior on this tile (GameObject will be changed to Warrior)
-    private GameObject building; // building on this tile
-    private SpriteRenderer spriteRenderer;
+    private GameObject inGameObject; // gameobject with script InGameObject
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
     public GameTile init(int x, int y, TileType tp, ref Sprite s) {
@@ -21,33 +17,28 @@ public class GameTile : Tile {
         this.y = y;
         this.type = tp;
         this.sprite = s;
-        this.colorTag = TileColor.green;
 
         return this;
     }
 
-    bool isOccupiedByWarrior() {
-        return warrior != null;
+    bool isOccupied() {
+        return inGameObject != null;
     }
 
-    bool isOccupiedByBuilding() {
-        return building != null;
-    }
-
-    void changeColor(TileColor c) {
-        this.colorTag = c;
-    }
-
-    public void setBuilding(GameObject _building) {
-        building = _building;
-    }
-
-    public void setWarrior(GameObject _warrior) {
-        warrior = _warrior;
+    public void setInGameObject(GameObject _inGameObject) {
+        inGameObject = _inGameObject;
+        //Debug.Log(inGameObject.ToString());
     }
 
     public TileType getType() {
         return type;
+    }
+
+    public void clickEvent() {
+        if (inGameObject != null) {
+            //inGameObject.click();
+            Debug.Log("clicked");
+        }
     }
 }
  
