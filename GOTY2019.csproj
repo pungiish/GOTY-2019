@@ -232,6 +232,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Mitja\Building.cs" />
+    <Compile Include="Assets\Scripts\Mitja\IngameObject.cs" />
+    <Compile Include="Assets\Scripts\Mitja\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Mitja\Unit.cs" />
     <Compile Include="Assets\Scripts\Vid\GameController.cs" />
     <Compile Include="Assets\Scripts\Vid\GameOver.cs" />
     <Compile Include="Assets\Scripts\Vid\GameTile.cs" />
