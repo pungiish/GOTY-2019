@@ -12,21 +12,17 @@ public class MouseController : MonoBehaviour {
         position.x = (gameObject.transform.position.x < 0) ? (int)gameObject.transform.position.x - 1 : (int)gameObject.transform.position.x;
         position.y = (gameObject.transform.position.y < 0) ? (int)gameObject.transform.position.y - 1 : (int)gameObject.transform.position.y;
 
-        //this.gameObject.GetComponent<MeshRenderer>().enabled = true;
-
-        Tile selected = ScriptableObject.CreateInstance<HighlightTile>();
+        Tile selected = ScriptableObject.CreateInstance<Tile>();
         selected.sprite = mapController.selectedTile;
         mapController.selectMap.SetTile(position, selected);
 
+        //Debug.Log("here");
         //mapController.highlight.SetTileFlags(position, TileFlags.None);
         //mapController.highlight.SetColor(position, Color.green);
-
-        //this.gameObject.GetComponent<MeshRenderer>().enabled = true;
     }
 
     private void OnMouseExit() {
-        //highlightMap.SetTile(position, ScriptableObject.CreateInstance<HighlightTile>().init(position.x, position.y, HighlightTile.TileColor.border, ref mapController.highlightTexture));
-        //this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        mapController.selectMap.SetTile(position, null);
     }
 
     private void OnMouseDown() {
