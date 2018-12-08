@@ -11,7 +11,8 @@ public class GameTile : Tile {
     private int y;
     private TileType type;
     private TileColor colorTag;
-    // private Warrior warrior; is warrior on this tile
+    private GameObject warrior; // warrior on this tile (GameObject will be changed to Warrior)
+    private GameObject building; // building on this tile
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
     public GameTile init(int x, int y, TileType tp, ref Sprite s) {
@@ -24,13 +25,24 @@ public class GameTile : Tile {
         return this;
     }
 
-    bool isOccupied() {
-        // return warrior != null;
-        return false;
+    bool isOccupiedByWarrior() {
+        return warrior != null;
+    }
+
+    bool isOccupiedByBuilding() {
+        return building != null;
     }
 
     void changeColor(TileColor c) {
         this.colorTag = c;
+    }
+
+    public void setBuilding(GameObject _building) {
+        building = _building;
+    }
+
+    public void setWarrior(GameObject _warrior) {
+        warrior = _warrior;
     }
 
     public TileType getType() {

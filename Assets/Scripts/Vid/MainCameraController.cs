@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainCameraController : MonoBehaviour {
+    public GameController gameController;
     public float speed;
-    public int maxX;
-    public int maxY;
+    private int maxX;
+    private int maxY;
     private int screenWidth;
     private int screenHeight;
 
 	void Start () {
         screenWidth = Screen.width;
         screenHeight = Screen.height;
+        maxX = gameController.width / 2 - (int)Camera.main.orthographicSize;
+        maxY = gameController.height / 2 - (int)Camera.main.orthographicSize / 2;
 	}
 	
 	void Update () {

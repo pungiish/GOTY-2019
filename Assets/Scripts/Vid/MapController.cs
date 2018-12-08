@@ -9,6 +9,9 @@ public class MapController : MonoBehaviour {
     public Sprite[] forestTextures;
     public Sprite[] mountainTextures;
     public Sprite highlightTexture;
+    public GameObject[] warriors;
+    public GameObject[] buildings;
+    public GameObject selected;
 
     private int width;
     private int height;
@@ -38,13 +41,5 @@ public class MapController : MonoBehaviour {
 
     public void hideTileBorders() {
         highlight.gameObject.SetActive(false);
-    }
-
-    private void OnMouseOver() {
-        // tile na tej lokaciji bo spremenil barvo glede na to, če je veljavna poteza
-    }
-
-    private void OnMouseDown() {
-        // tile se bo izbral, preveriti bo potrebno, če je veljavna poteza
     }
 }
