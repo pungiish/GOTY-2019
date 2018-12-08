@@ -48,6 +48,8 @@ public class MapGenerator : object {
                 highlightMap.SetTile(position, ScriptableObject.CreateInstance<GameTile>().init(i, j, GameTile.TileType.border, ref mapController.highlightTexture));
                 selected = GameObject.Instantiate(mapController.selected);
                 selected.transform.position += position;
+                selected.GetComponent<MouseController>().mapController = mapController;
+                selected.GetComponent<MouseController>().highlightMap = highlightMap;
             }
         }
 

@@ -12,6 +12,7 @@ public class MapController : MonoBehaviour {
     public GameObject[] warriors;
     public GameObject[] buildings;
     public GameObject selected;
+    public Sprite selectedTile;
 
     private int width;
     private int height;
@@ -28,7 +29,7 @@ public class MapController : MonoBehaviour {
         MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, this);
         mapGenerator.generateMap();
 
-        hideTileBorders();
+        //hideTileBorders();
     }
 
     public GameTile getTileAt(Vector3Int position) {

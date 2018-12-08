@@ -307,8 +307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMap: {fileID: 534799539}
-  width: 41
-  height: 41
+  width: 31
+  height: 31
 --- !u!114 &534799539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,7 +336,8 @@ MonoBehaviour:
   - {fileID: 1138150920884734, guid: 106662d37b87deb48a405ba7ba4d67ee, type: 2}
   - {fileID: 1757857626694882, guid: 4167e9ed0f7a1f64fbbd6b2b7c2d83c6, type: 2}
   - {fileID: 1378286908467254, guid: 8e7fc654405ecee47ae033ef7129359d, type: 2}
-  selected: {fileID: 1812070240797694, guid: ac31e8f0ea3cfd942a72b16d2d1ed134, type: 2}
+  selected: {fileID: 1729120628387676, guid: 846a64ed3d4611a4f82a4158ca6631c7, type: 2}
+  selectedTile: {fileID: 21300000, guid: dc03b22c74b9a204fa034d61c228d3ef, type: 3}
   map: {fileID: 1195260490}
   highlight: {fileID: 1062713532}
 --- !u!1 &897224999

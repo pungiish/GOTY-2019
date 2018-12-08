@@ -5,14 +5,15 @@ using UnityEngine.Tilemaps;
 
 public class GameTile : Tile {
     public enum TileColor { red, green };
-    public enum TileType { ground, water, forest, mountain, border };
+    public enum TileType { ground, water, forest, mountain, border, selected };
 
-    private int x;
-    private int y;
+    public int x { get; private set; }
+    public int y { get; private set; }
     private TileType type;
     private TileColor colorTag;
     private GameObject warrior; // warrior on this tile (GameObject will be changed to Warrior)
     private GameObject building; // building on this tile
+    private SpriteRenderer spriteRenderer;
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
     public GameTile init(int x, int y, TileType tp, ref Sprite s) {
@@ -49,3 +50,4 @@ public class GameTile : Tile {
         return type;
     }
 }
+ 
