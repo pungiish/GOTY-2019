@@ -20,4 +20,9 @@ public class HighlightTile : Tile {
 
         return this;
     }
+
+    public void changeColor(Color _color) {
+        //Debug.Log("ok");
+        this.color = _color;
+    }
 }

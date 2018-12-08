@@ -18,6 +18,7 @@ public class MapController : MonoBehaviour {
     private int height;
     public Tilemap map;
     public Tilemap highlight;
+    public Tilemap selectMap;
 
     public void startMapGenerator(int w, int h) {
         width = w;
@@ -26,7 +27,7 @@ public class MapController : MonoBehaviour {
         map.size = new Vector3Int(width, height, 0);
         highlight.size = new Vector3Int(width, height, 0);
 
-        MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, this);
+        MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, ref selectMap, this);
         mapGenerator.generateMap();
 
         //hideTileBorders();

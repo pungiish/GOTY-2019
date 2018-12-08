@@ -13,11 +13,12 @@ public class MapGenerator : object {
     private int minN, maxN;
     private Tilemap map;
     private Tilemap highlightMap;
+    private Tilemap selectMap;
     private MapController mapController;
     private static int[] directions = new int[16] { 0, -1, 1, 0, 0, 1, 0, -1, -1, -1, 1, -1, 1, 1, -1, 1 };
     private static System.Random randomShuffle = new System.Random();
 
-    public MapGenerator(int w, int h, int i, ref Tilemap tilemap, ref Tilemap highlight, MapController mapC) {
+    public MapGenerator(int w, int h, int i, ref Tilemap tilemap, ref Tilemap highlight, ref Tilemap selected, MapController mapC) {
         maxX = w / 2;
         maxY = h / 2;
         mapIndex = i;
@@ -26,6 +27,7 @@ public class MapGenerator : object {
         //Debug.Log(minN.ToString() + " " + maxN.ToString());
         map = tilemap;
         highlightMap = highlight;
+        selectMap = selected;
         mapController = mapC;
     }
 
@@ -49,8 +51,6 @@ public class MapGenerator : object {
                 selected = GameObject.Instantiate(mapController.selected);
                 selected.transform.position += position;
                 selected.GetComponent<MouseController>().mapController = mapController;
-                selected.GetComponent<MouseController>().highlightMap = highlightMap;
-                selected.GetComponent<MouseController>().map = map;
             }
         }
 
