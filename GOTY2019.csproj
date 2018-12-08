@@ -238,6 +238,7 @@
     <Compile Include="Assets\Scripts\Vid\MainCameraController.cs" />
     <Compile Include="Assets\Scripts\Vid\MapController.cs" />
     <Compile Include="Assets\Scripts\Vid\MapGenerator.cs" />
+    <Compile Include="Assets\Scripts\Vid\MouseController.cs" />
     <Compile Include="Assets\Scripts\Vid\PauseMenuController.cs" />
     <Compile Include="Assets\Scripts\Vid\StartMenu.cs" />
   </ItemGroup>

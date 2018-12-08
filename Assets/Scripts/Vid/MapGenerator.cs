@@ -38,6 +38,7 @@ public class MapGenerator : object {
 
     public void generateMap() {
         Vector3Int position = new Vector3Int(0, 0, 0);
+        GameObject selected;
 
         for (int i = -maxX; i <= maxX; i++) {
             for (int j = -maxY; j <= maxY; j++) {
@@ -45,6 +46,8 @@ public class MapGenerator : object {
                 position.y = j;
 
                 highlightMap.SetTile(position, ScriptableObject.CreateInstance<GameTile>().init(i, j, GameTile.TileType.border, ref mapController.highlightTexture));
+                selected = GameObject.Instantiate(mapController.selected);
+                selected.transform.position += position;
             }
         }
 
@@ -96,19 +99,58 @@ public class MapGenerator : object {
             y1 = boundaries[(counter % 4) * 4 + 2]; y2 = boundaries[(counter % 4) * 4 + 3];
 
             //Debug.Log(x1 + " " + x2 + " " + y1 + " " + y2);
-            randX = UnityEngine.Random.Range(x1 + offset, x2 - offset);
-            randY = UnityEngine.Random.Range(y1 + offset, y2 - offset);
-            //Debug.Log(i + " " + randX + " " + randY);
+            while (true) {
+                randX = UnityEngine.Random.Range(x1 + offset, x2 - offset);
+                randY = UnityEngine.Random.Range(y1 + offset, y2 - offset);
+                position.x = randX; position.y = randY;
 
-            position.x = randX; position.y = randY;
+                if ((map.GetTile(position) as GameTile).getType() != GameTile.TileType.water) {
+                    break;
+                }
+            }
+            //Debug.Log(i + " " + randX + " " + randY);
+            
             buildBase(counter, position);
         }
 
         for (int i = 0; i < 3; i++) {
             if (counter < 4) {
+                x1 = boundaries[(counter % 4) * 4]; x2 = boundaries[(counter % 4) * 4 + 1];
+                y1 = boundaries[(counter % 4) * 4 + 2]; y2 = boundaries[(counter % 4) * 4 + 3];
 
+                while (true) {
+                    randX = UnityEngine.Random.Range(x1 + offset, x2 - offset);
+                    randY = UnityEngine.Random.Range(y1 + offset, y2 - offset);
+                    position.x = randX; position.y = randY;
+
+                    if ((map.GetTile(position) as GameTile).getType() != GameTile.TileType.water) {
+                        break;
+                    }
+                }
+
+                GameObject gameObject = GameObject.Instantiate(mapController.buildings[mapController.buildings.Length - 1]); // potrebno se nastaviti edino kateremu igralcu pripada
+                gameObject.transform.position += position;
+                (map.GetTile(position) as GameTile).setBuilding(gameObject);
+
+                counter++;
             } else {
+                x1 = 0; x2 = 0; y1 = 0; y2 = 0;
 
+                while (true) {
+                    randX = UnityEngine.Random.Range(x1 - offset, x2 + offset);
+                    randY = UnityEngine.Random.Range(y1 - offset, y2 + offset);
+                    position.x = randX; position.y = randY;
+
+                    if ((map.GetTile(position) as GameTile).getType() != GameTile.TileType.water) {
+                        break;
+                    }
+                }
+
+                GameObject gameObject = GameObject.Instantiate(mapController.buildings[mapController.buildings.Length - 1]); // potrebno se nastaviti edino kateremu igralcu pripada
+                gameObject.transform.position += position;
+                (map.GetTile(position) as GameTile).setBuilding(gameObject);
+
+                counter++;
             }
         }
     }
