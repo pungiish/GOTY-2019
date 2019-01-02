@@ -242,7 +242,7 @@
     <Compile Include="Assets\Scripts\Mitja\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Mitja\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Mitja\Unit.cs" />
-    <Compile Include="Assets\Scripts\Mitja\UnitData.cs" />
+    <Compile Include="Assets\Scripts\Mitja\GameData.cs" />
     <Compile Include="Assets\Scripts\Mitja\UnitPrefabs.cs" />
     <Compile Include="Assets\Scripts\Vid\GameController.cs" />
     <Compile Include="Assets\Scripts\Vid\GameOver.cs" />

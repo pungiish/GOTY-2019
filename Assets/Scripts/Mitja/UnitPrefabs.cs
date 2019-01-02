@@ -7,10 +7,9 @@ public class UnitPrefabs : MonoBehaviour {
     public GameObject yellowUnit;
 
 	// Use this for initialization
-	void Start () {
-        Debug.Log("yellowUnit: " + yellowUnit);
-    }
+	void Start () {}
 	
 	// Update is called once per frame
 	void Update () {}
 }
+

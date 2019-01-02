@@ -56,16 +56,20 @@ public class GameController : MonoBehaviour {
     {
         Players = new List<PlayerController>();
         Players.Capacity = numberOfPlayers;
-        UnitPrefabs prefabs = PrefabsContainer.GetComponent<UnitPrefabs>();
+        
         lineHandler = gameObject.AddComponent<LineRendererHandler>().Init(0.2f, Color.blue, lineRendObject);
+        {
+            UnitPrefabs prefabs = PrefabsContainer.GetComponent<UnitPrefabs>();
+            GameData.Init(numberOfPlayers, prefabs);
+        }
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            Players.Add(gameObject.AddComponent<PlayerController>().Init("Player1", gameMap, PlayerController.Tribe.A, prefabs, lineHandler));
+            Players.Add(gameObject.AddComponent<PlayerController>().Init("Player1", gameMap, PlayerController.Tribe.A, lineHandler));
             initPlayer(i, i % 2);
         }
         generateMap();
-        
+
         nextTurn();
     }
 
@@ -93,6 +97,6 @@ public class GameController : MonoBehaviour {
     }
 
     private void generateMap() {
-        gameMap.startMapGenerator(width, height);
+        gameMap.startMapGenerator(width, height, Players);
     }
 }

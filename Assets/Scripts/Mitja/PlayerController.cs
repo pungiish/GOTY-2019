@@ -15,38 +15,29 @@ public class PlayerController : MonoBehaviour {
     private List<Unit> Units = new List<Unit>();
     public Tilemap Map { get; private set; }
     public Tilemap HighlightMap { get; private set; }
-
-    private UnitPrefabs Prefabs;
+    
     public LineRendererHandler LineHandler { get; private set; }
 
-    public PlayerController Init(System.String playerName, MapController map, Tribe playerTribe, UnitPrefabs prefabs, LineRendererHandler lh)
+    public PlayerController Init(System.String playerName, MapController map, Tribe playerTribe, LineRendererHandler lh)
     {
         this.PlayerName = playerName;
         this.PlayerTribe = playerTribe;
         Map = map.map;
         HighlightMap = map.highlight;
-        Prefabs = prefabs;
         LineHandler = lh;
 
         return this;
     }
     
-	void Start () {
-        
-    }
+	void Start () {}
 
     public Unit AddNewUnit(UnitType type, Vector3Int pos)
     {
-        Unit u = Instantiate(Prefabs.yellowUnit).GetComponent<Unit>();
+        Unit u = Instantiate(GameData.UnitPrefabs[0,0]).GetComponent<Unit>();
         u.Init(this, Map.GetCellCenterWorld(pos), Map.GetTile<GameTile>(pos));
         Units.Add(u);
         Map.GetTile<GameTile>(pos).setInGameObject(u.gameObject);
         
-        /*
-        u.ShowPossibleMoves();
-        u.DrawMoveLineToDest(new Vector3Int(0, 3, 0));
-        u.Move(new Vector3Int(0, 3, 0));
-        */
         return u;
     }
 

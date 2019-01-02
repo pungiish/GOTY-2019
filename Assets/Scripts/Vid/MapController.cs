@@ -20,14 +20,14 @@ public class MapController : MonoBehaviour {
     public Tilemap highlight;
     public Tilemap selectMap;
 
-    public void startMapGenerator(int w, int h) {
+    public void startMapGenerator(int w, int h, List<PlayerController> playerList) {
         width = w;
         height = h;
 
         map.size = new Vector3Int(width, height, 0);
         highlight.size = new Vector3Int(width, height, 0);
 
-        MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, ref selectMap, this);
+        MapGenerator mapGenerator = new MapGenerator(width, height, 0, ref map, ref highlight, ref selectMap, this, playerList);
         mapGenerator.generateMap();
 
         //hideTileBorders();

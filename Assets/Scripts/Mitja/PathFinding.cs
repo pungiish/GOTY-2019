@@ -100,7 +100,7 @@ namespace UnitHelpFunctions
                     gt = map.GetTile<GameTile>(pos);
 
                     //pri ceni premika se uposteva utez polja, na katerega gremo (in ne utez polja na katerem smo)
-                    int dbg1 = s.Dist + UnitData.MoveWeights[unitIndex, (int)gt.type];
+                    int dbg1 = s.Dist + GameData.MoveWeights[unitIndex, (int)gt.type];
                     if (InBounds(highlight, pos.x, pos.y) &&
                        dbg1 < ht.selectedUnitDistance && 
                        dbg1 <= movePoints)
@@ -178,7 +178,7 @@ namespace UnitHelpFunctions
                     {
                         Debug.Log("t = null" + x + ", " + y);
                     }
-                    t.selectedUnitDistance = UnitData.INF;
+                    t.selectedUnitDistance = GameData.INF;
                     t.selectedUnitPreviousPath = -1;
                     t.changeColor(HighlightTile.TileColor.red);
                 }

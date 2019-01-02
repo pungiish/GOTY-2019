@@ -6,7 +6,7 @@ using System;
 
 public class MapGenerator : object {
     private enum LastLocation { BEG, LT, RT, LB, RB };
-
+    
     private int maxX;
     private int maxY;
     private int mapIndex;
@@ -17,8 +17,10 @@ public class MapGenerator : object {
     private MapController mapController;
     private static int[] directions = new int[16] { 0, -1, 1, 0, 0, 1, 0, -1, -1, -1, 1, -1, 1, 1, -1, 1 };
     private static System.Random randomShuffle = new System.Random();
+    private List<PlayerController> players;
 
-    public MapGenerator(int w, int h, int i, ref Tilemap tilemap, ref Tilemap highlight, ref Tilemap selected, MapController mapC) {
+    public MapGenerator(int w, int h, int i, ref Tilemap tilemap, ref Tilemap highlight, ref Tilemap selected, MapController mapC,
+        List<PlayerController> playerList) {
         maxX = w / 2;
         maxY = h / 2;
         mapIndex = i;
@@ -29,6 +31,7 @@ public class MapGenerator : object {
         highlightMap = highlight;
         selectMap = selected;
         mapController = mapC;
+        this.players = playerList;
     }
 
     private LastLocation lastLocation(int x, int y) {
@@ -83,10 +86,9 @@ public class MapGenerator : object {
         for (int i = 0; i < 6 * 2; i += 2) {
             position.x += directions[i]; position.y += directions[i + 1];
 
-            GameObject gameObject2= GameObject.Instantiate(mapController.warriors[GameController.selectedWarriorAndBuilding[player]]);
-            gameObject2.transform.position += position;
+            GameObject gameObject2 = players[player].AddNewUnit(PlayerController.UnitType.Hero, position).gameObject; 
             (map.GetTile(position) as GameTile).setInGameObject(gameObject2);
-
+            
             position.x -= directions[i]; position.y -= directions[i + 1];
         }
     }

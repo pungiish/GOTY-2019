@@ -2,13 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
-public static class UnitData
+public static class GameData
 {
+    public const int NumOfDifferentTribes = 1;
     public const int NumOfDifferentUnits = 1;
     public const int NumOfDifferentTerrainTypes = 5;
     public const int INF = Int32.MaxValue / 2; //da ne pride do overflowa
     public const int INF_WEIGHT = INF - 1;
+
+    public static int numOfPlayers;
+    public static GameObject[,] UnitPrefabs;
+
+    public static void Init(int _numOfPlayers, UnitPrefabs prefabs)
+    {
+        numOfPlayers = _numOfPlayers;
+        UnitPrefabs = new GameObject[NumOfDifferentTribes, NumOfDifferentUnits];
+
+        UnitPrefabs[0, 0] = prefabs.yellowUnit;
+    }
 
     public static readonly int[,] MoveWeights = {
         //ground, water, forest, mountain, border
