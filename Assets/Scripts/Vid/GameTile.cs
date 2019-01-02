@@ -8,8 +8,8 @@ public class GameTile : Tile {
 
     public int x { get; private set; }
     public int y { get; private set; }
-    private TileType type;
-    private GameObject inGameObject; // gameobject with script InGameObject
+    public TileType type { get; private set; }
+    public GameObject inGameObject { get; private set; } // gameobject with script InGameObject
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
     public GameTile init(int x, int y, TileType tp, ref Sprite s) {
@@ -27,7 +27,7 @@ public class GameTile : Tile {
 
     public void setInGameObject(GameObject _inGameObject) {
         inGameObject = _inGameObject;
-        //Debug.Log(inGameObject.ToString());
+      //  Debug.Log(inGameObject.ToString());
     }
 
     public TileType getType() {
@@ -36,7 +36,7 @@ public class GameTile : Tile {
 
     public void clickEvent() {
         if (inGameObject != null) {
-            //inGameObject.click();
+          //  inGameObject.Click();
             Debug.Log("clicked");
         }
     }

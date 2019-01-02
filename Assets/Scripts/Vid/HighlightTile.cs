@@ -9,6 +9,7 @@ public class HighlightTile : Tile {
     public int x { get; private set; }
     public int y { get; private set; }
     public int selectedUnitDistance;
+    public int selectedUnitPreviousPath;
     private TileColor tileColor;
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
@@ -24,5 +25,20 @@ public class HighlightTile : Tile {
     public void changeColor(Color _color) {
         //Debug.Log("ok");
         this.color = _color;
+    }
+
+    public void changeColor(TileColor _color)
+    {
+        switch (_color) {
+            case TileColor.red:
+                this.color = Color.red;
+                break;
+            case TileColor.green:
+                this.color = Color.green;
+                break;
+            default:
+                this.color = Color.gray;
+                break;
+        }
     }
 }

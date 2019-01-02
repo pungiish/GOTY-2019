@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class MouseController : MonoBehaviour {
     private Vector3Int position;
     public MapController mapController { private get; set; }
-
+    
     private void OnMouseEnter() {
         position = Vector3Int.zero;
         position.x = (gameObject.transform.position.x < 0) ? (int)gameObject.transform.position.x - 1 : (int)gameObject.transform.position.x;
@@ -16,9 +16,12 @@ public class MouseController : MonoBehaviour {
         selected.sprite = mapController.selectedTile;
         mapController.selectMap.SetTile(position, selected);
 
-        //Debug.Log("here");
-        //mapController.highlight.SetTileFlags(position, TileFlags.None);
-        //mapController.highlight.SetColor(position, Color.green);
+        //risanje crte premika
+        GameTile selectedTile = mapController.map.GetTile<GameTile>(position);
+        if (selectedTile.inGameObject == null && GameState.selectedUnit != null)
+        {
+            GameState.selectedUnit.DrawMoveLineToDest(position);
+        }
     }
 
     private void OnMouseExit() {
@@ -26,7 +29,35 @@ public class MouseController : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        //Debug.Log(position.ToString());
-        (mapController.map.GetTile(position) as GameTile).clickEvent();
+        if (GameState.UnitMoving == true) //ko se enota premika, se ne more klikniti nicesar
+            return;
+
+        position = Vector3Int.zero;
+        position.x = (gameObject.transform.position.x < 0) ? (int)gameObject.transform.position.x - 1 : (int)gameObject.transform.position.x;
+        position.y = (gameObject.transform.position.y < 0) ? (int)gameObject.transform.position.y - 1 : (int)gameObject.transform.position.y;
+
+        GameTile selectedTile = mapController.map.GetTile<GameTile>(position);
+
+        if(selectedTile.inGameObject != null)
+        {
+            Unit u = selectedTile.inGameObject.GetComponent<Unit>();
+            Debug.Log("Selected unit changed");
+            if (u != null && u.player == GameState.selectedPlayer)
+            {
+                GameState.selectedUnit = u;
+                GameState.selectedUnit.ShowPossibleMoves();
+            }
+        }
+        else
+        {
+            if (GameState.selectedUnit != null)
+            {
+                GameState.selectedUnit.TilePos.setInGameObject(null);
+                selectedTile.setInGameObject(GameState.selectedUnit.gameObject);
+                GameState.selectedUnit.Move(position);
+            }
+        }
+
+        //selectedTile.clickEvent();
     }
 }

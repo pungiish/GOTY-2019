@@ -15,7 +15,7 @@ public class MainCameraController : MonoBehaviour {
         screenHeight = Screen.height;
         maxX = gameController.width / 2 - (int)Camera.main.orthographicSize;
         maxY = gameController.height / 2 - (int)Camera.main.orthographicSize / 2;
-	}
+    }
 	
 	void Update () {
         // TODO - you can move to the end of the map (not screen) - checkk how big is map minus camera size and so on...

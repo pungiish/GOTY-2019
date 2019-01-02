@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour {
     //private List<PlayerController> players;
     private bool playSound;
     public MapController gameMap;
+    public List<PlayerController> Players { get; private set; } 
     public int width;
     public int height;
     public static int numberOfPlayers = 2; // ti dve spremenljivki se inicializirata po game menu
@@ -45,12 +46,26 @@ public class GameController : MonoBehaviour {
         hb.transform.position = Camera.main.ViewportToWorldPoint(newPosition);
         healthBars.Add(hb);
     }
-    
-	void Start () {
-        for (int i = 0; i < numberOfPlayers; i++) {
+
+    public GameObject PrefabsContainer;
+    public GameObject lineRendObject;
+
+    private LineRendererHandler lineHandler;
+
+    void Start ()
+    {
+        Players = new List<PlayerController>();
+        Players.Capacity = numberOfPlayers;
+        UnitPrefabs prefabs = PrefabsContainer.GetComponent<UnitPrefabs>();
+        lineHandler = gameObject.AddComponent<LineRendererHandler>().Init(0.2f, Color.blue, lineRendObject);
+
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            Players.Add(gameObject.AddComponent<PlayerController>().Init("Player1", gameMap, PlayerController.Tribe.A, prefabs, lineHandler));
             initPlayer(i, i % 2);
         }
         generateMap();
+        
         nextTurn();
     }
 
@@ -60,6 +75,13 @@ public class GameController : MonoBehaviour {
         if (!alivePlayers[currentTurn]) {
             nextTurn();
         }
+
+        if(GameState.selectedUnit != null)
+            GameState.selectedUnit.DrawNoMoveLine();
+
+        GameState.selectedPlayer = Players[currentTurn];
+        GameState.selectedUnit = null;
+
 
         turnText.text = onTurn + (currentTurn + 1);
         turnCountdownController.resetAndStart();

@@ -53,14 +53,19 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Mitja\Building.cs" />
      <Compile Include="Assets\Scripts\Mitja\IngameObject.cs" />
+     <Compile Include="Assets\Scripts\Mitja\PathFinding.cs" />
      <Compile Include="Assets\Scripts\Mitja\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Mitja\Unit.cs" />
+     <Compile Include="Assets\Scripts\Mitja\UnitData.cs" />
      <Compile Include="Assets\Scripts\Vid\GameController.cs" />
      <Compile Include="Assets\Scripts\Vid\GameOver.cs" />
      <Compile Include="Assets\Scripts\Vid\GameTile.cs" />
+     <Compile Include="Assets\Scripts\Vid\HighlightTile.cs" />
+     <Compile Include="Assets\Scripts\Vid\LoadingScreenController.cs" />
      <Compile Include="Assets\Scripts\Vid\MainCameraController.cs" />
      <Compile Include="Assets\Scripts\Vid\MapController.cs" />
      <Compile Include="Assets\Scripts\Vid\MapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Vid\MouseController.cs" />
      <Compile Include="Assets\Scripts\Vid\PauseMenuController.cs" />
      <Compile Include="Assets\Scripts\Vid\StartMenu.cs" />
  <Reference Include="UnityEngine.CoreModule">
