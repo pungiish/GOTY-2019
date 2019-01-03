@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     //private List<PlayerController> players;
-    private bool playSound;
+    public static bool playSound;
     public MapController gameMap;
     public List<PlayerController> Players { get; private set; } 
     public int width;
     public int height;
-    public static int numberOfPlayers = 2; // ti dve spremenljivki se inicializirata po game menu
+    public static int numberOfPlayers = 2; // ta spremenljivka se inicializira po game menu
     public static List<int> selectedWarriorAndBuilding = new List<int>();
     public static List<bool> alivePlayers = new List<bool>();
     public static List<GameObject> healthBars = new List<GameObject>();
@@ -98,5 +98,9 @@ public class GameController : MonoBehaviour {
 
     private void generateMap() {
         gameMap.startMapGenerator(width, height, Players);
+    }
+
+    public void openPauseMenu() {
+
     }
 }

@@ -232,10 +232,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\LineRendObject.cs" />
     <Compile Include="Assets\Scripts\Mitja\Building.cs" />
+    <Compile Include="Assets\Scripts\Mitja\GameData.cs" />
+    <Compile Include="Assets\Scripts\Mitja\GameState.cs" />
     <Compile Include="Assets\Scripts\Mitja\IngameObject.cs" />
+    <Compile Include="Assets\Scripts\Mitja\LineRendererHandler.cs" />
+    <Compile Include="Assets\Scripts\Mitja\PathFinding.cs" />
     <Compile Include="Assets\Scripts\Mitja\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Mitja\Unit.cs" />
+    <Compile Include="Assets\Scripts\Mitja\UnitPrefabs.cs" />
     <Compile Include="Assets\Scripts\Vid\GameController.cs" />
     <Compile Include="Assets\Scripts\Vid\GameOver.cs" />
     <Compile Include="Assets\Scripts\Vid\GameTile.cs" />
