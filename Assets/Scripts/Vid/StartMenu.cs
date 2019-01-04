@@ -8,7 +8,8 @@ public class StartMenu : MonoBehaviour {
     public GameObject selectPlayersUI;
     public GameObject selectWarriorsUI;
     public Text selectWarriorsPlayerText;
-    //public GameObject loadingScreenUI;
+    public GameObject selectMapUI;
+    public GameObject countdownUI;
 
     private bool sound = true;
     private int playerTurn = 0;
@@ -17,10 +18,11 @@ public class StartMenu : MonoBehaviour {
     public Text soundText;
     private const string soundOff = "SOUND OFF";
     private const string soundOn = "SOUND ON";
+    private const string playerr = "Player ";
 
     private const string players = "players";
     private const string player = "player";
-    private const string playerr = "Player ";
+    private const string map = "map";    
 
     private void changeSoundText() {
         if (sound) {
@@ -55,9 +57,15 @@ public class StartMenu : MonoBehaviour {
         PlayerPrefs.SetInt(players, number);
         numberOfPlayers = number;
 
+        playerTurn = 0;
         selectPlayersUI.SetActive(false);
         selectWarriorsUI.SetActive(true);
         selectWarriorsPlayerText.text = playerr + (playerTurn + 1);
+    }
+
+    public void selectPlayersBack() {
+        selectPlayersUI.SetActive(false);
+        startMenuUI.SetActive(true);
     }
 
     public void selectWarriors(int number) {
@@ -66,7 +74,27 @@ public class StartMenu : MonoBehaviour {
         if (++playerTurn < numberOfPlayers) {
             selectWarriorsPlayerText.text = playerr + (playerTurn + 1);
         } else {
-            Debug.Log("konec");
+            selectWarriorsUI.SetActive(false);
+            selectMapUI.SetActive(true);
         }
+    }
+
+    public void selectWarriorsBack() {
+        selectWarriorsUI.SetActive(false);
+        selectPlayersUI.SetActive(true);
+    }
+
+    public void selectMap(int number) {
+        PlayerPrefs.SetInt(map, number);
+
+        selectMapUI.SetActive(false);
+        countdownUI.SetActive(true);
+    }
+
+    public void selectMapBack() {
+        playerTurn = 0;
+        selectWarriorsPlayerText.text = playerr + (playerTurn + 1);
+        selectMapUI.SetActive(false);
+        selectWarriorsUI.SetActive(true);
     }
 }
