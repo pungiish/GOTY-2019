@@ -29,9 +29,6 @@ public class MouseController : MonoBehaviour {
     }
 
     private void OnMouseDown() {
-        if (GameState.UnitMoving == true) //ko se enota premika, se ne more klikniti nicesar
-            return;
-
         position = Vector3Int.zero;
         position.x = (gameObject.transform.position.x < 0) ? (int)gameObject.transform.position.x - 1 : (int)gameObject.transform.position.x;
         position.y = (gameObject.transform.position.y < 0) ? (int)gameObject.transform.position.y - 1 : (int)gameObject.transform.position.y;
@@ -50,11 +47,10 @@ public class MouseController : MonoBehaviour {
         }
         else
         {
-            if (GameState.selectedUnit != null)
+            if (GameState.selectedUnit != null && GameState.selectedUnit.Move(position)) //Move vrne true, ce se premik zacne izvajati
             {
                 GameState.selectedUnit.TilePos.setInGameObject(null);
                 selectedTile.setInGameObject(GameState.selectedUnit.gameObject);
-                GameState.selectedUnit.Move(position);
             }
         }
 

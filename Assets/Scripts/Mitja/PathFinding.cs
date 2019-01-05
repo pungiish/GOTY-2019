@@ -46,7 +46,8 @@ namespace UnitHelpFunctions
         {
             return t.cellBounds.Contains(new Vector3Int(x, y, z));
         }
-        public static void FindPossibleMoves(int posX, int posY, int movePoints, int unitIndex, Tilemap map, Tilemap highlight)
+        public static void FindPossibleMoves(int posX, int posY, int movePoints, int unitIndex, Tilemap map, 
+            Tilemap highlight, bool coloriTiles = true)
         {
             if(map == null)
             {
@@ -108,7 +109,8 @@ namespace UnitHelpFunctions
                         ht.selectedUnitDistance = s.Dist + dbg1;//UnitData.MoveWeights[unitIndex, (int)gt.type];
                         ht.selectedUnitPreviousPath = i;
                         ht.changeColor(HighlightTile.TileColor.green);
-                        Debug.Log("Green: " + ht.selectedUnitDistance + ", " + pos.x + ", " + pos.y);
+                        if(coloriTiles == true)
+                            Debug.Log("Green: " + ht.selectedUnitDistance + ", " + pos.x + ", " + pos.y);
                         Pq.Add(new Str(ht.selectedUnitDistance, pos.x, pos.y), '.');
                     }
                 }

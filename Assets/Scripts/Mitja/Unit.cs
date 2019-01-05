@@ -44,19 +44,24 @@ public class Unit : MonoBehaviour
     bool moving = false;
 
     //function changes units position immediately (even if it needs some time to reach it)
-    public void Move(Vector3Int pos)
+    public bool Move(Vector3Int pos)
     {
-        if(movePath == null)
-            movePath = UnitHelpFunctions.PathFinding.GetMovePositions(player.HighlightMap, pos);
+        UnitHelpFunctions.PathFinding.FindPossibleMoves(TilePos.x, TilePos.y, MoveRange, 0, player.Map, player.HighlightMap, false);
+        movePath = UnitHelpFunctions.PathFinding.GetMovePositions(player.HighlightMap, pos);
 
         if (movePath == null)
+        {
             Debug.Log("Cannot move");
+            return false;
+        }
         else
         {
-            GameState.UnitMoving = true;
+            GameState.MovementStart();
             TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden na koncno pozicijo
             this.DrawNoMoveLine();
             moving = true;
+            Debug.Log("StartMovement");
+            return true;
         }
     }
 
@@ -64,6 +69,7 @@ public class Unit : MonoBehaviour
     void Update () {
         if (moving == true && movePath != null)
         {
+            Debug.Log("MOVING");
             float speed = 3.0f;
             float step = speed * Time.deltaTime;
             Vector3 currPos = this.transform.position;
@@ -77,7 +83,7 @@ public class Unit : MonoBehaviour
                     movePath = null;
                     moving = false;
                     ShowPossibleMoves();
-                    GameState.UnitMoving = false;
+                    GameState.MovementEnd();
                     return;
                 }
                 else
