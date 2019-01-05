@@ -43,6 +43,7 @@ public static class GameState
         GameTile posTile = map.GetTile<GameTile>(pos);
         if(posTile.inGameObject == null && selectedUnit != null) // premik
         {
+            GameTile unitLoc = selectedUnit.TilePos;
             //sync lock?
             if (!SelectedUnit.Move(pos)) //Enota ne more izvesti premika
                 return;
@@ -50,6 +51,8 @@ public static class GameState
             //rezerviramo koncni tile
             posTile.inGameObject = GameObject.Instantiate(GameData.ReservedSpacePanel);
             posTile.inGameObject.transform.position = map.GetCellCenterWorld(pos);
+            
+            unitLoc.inGameObject = null; //sprostimo prejsnjo lokacijo
             SelectedUnit = null;
         }
         if (posTile.inGameObject != null)

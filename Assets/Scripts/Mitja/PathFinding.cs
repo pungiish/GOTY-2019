@@ -49,7 +49,7 @@ namespace UnitHelpFunctions
         public static void FindPossibleMoves(int posX, int posY, int movePoints, int unitIndex, Tilemap map, 
             Tilemap highlight, bool colorTiles = true)
         {
-            Clear(highlight, HighlightTile.TileColor.red, false);
+            Clear(highlight, HighlightTile.TileColor.border, false);
             //sortedSet in priority queue ni podprt v Unity, zato uporabimo SortedDictionary kot priority queue
             SortedDictionary<Str, Char> Pq = new SortedDictionary<Str, Char>();
 
@@ -102,8 +102,12 @@ namespace UnitHelpFunctions
                         ht.selectedUnitDistance = s.Dist + dbg1;//UnitData.MoveWeights[unitIndex, (int)gt.type];
                         ht.selectedUnitPreviousPath = i;
                         if (colorTiles == true)
-                            ht.changeColor(HighlightTile.TileColor.green);
-
+                        {
+                            if (gt.inGameObject == null)
+                                ht.changeColor(HighlightTile.TileColor.green);
+                            else
+                                ht.changeColor(HighlightTile.TileColor.red);
+                        }
                         Pq.Add(new Str(ht.selectedUnitDistance, pos.x, pos.y), '.');
                     }
                 }
