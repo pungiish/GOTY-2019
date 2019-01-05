@@ -16,6 +16,12 @@ public class MapGenerator : object {
     private Tilemap selectMap;
     private MapController mapController;
     private static int[] directions = new int[16] { 0, -1, 1, 0, 0, 1, 0, -1, -1, -1, 1, -1, 1, 1, -1, 1 };
+    private static int[][] direct = {
+        new int[]{0, 1}, new int[]{0, -1},
+        new int[]{1, 1}, new int[]{1, 0},
+        new int[]{1, -1}, new int[]{-1, 1}, 
+        new int[]{-1, 0}, new int[]{-1, -1} };
+
     private static System.Random randomShuffle = new System.Random();
     private List<PlayerController> players;
 
@@ -79,15 +85,15 @@ public class MapGenerator : object {
         GameObject gameObject = GameObject.Instantiate(mapController.buildings[GameController.selectedWarriorAndBuilding[player]]); // potrebno se nastaviti edino kateremu igralcu pripada
         gameObject.transform.position += position;
         (map.GetTile(position) as GameTile).setInGameObject(gameObject);
-
-        Shuffle(directions, directions.Length / 2, directions.Length);
+        
+        Shuffle(direct);
         for (int i = 0; i < GameData.UnitCreationSequence.Length; ++i) {
-            position.x += directions[2 * i]; position.y += directions[2 * i + 1];
-
+            position.x += direct[i][0]; position.y += direct[i][1];
+            
             GameObject gameObject2 = players[player].AddNewUnit(GameData.UnitCreationSequence[i], position).gameObject; 
             (map.GetTile(position) as GameTile).setInGameObject(gameObject2);
             
-            position.x -= directions[2 * i]; position.y -= directions[2 * i + 1];
+            position.x -= direct[i][0]; position.y -= direct[i][1];
         }
     }
 
@@ -386,45 +392,47 @@ public class MapGenerator : object {
         setTile(currentPosition, GameTile.TileType.mountain, ref mapController.mountainTextures[mapIndex]);
         counter--;
 
-        for (int i = 0; i < directions.Length / 2 && counter != 0; i += 2) {
-            currentPosition.x += directions[i];
-            currentPosition.y += directions[i + 1];
+        for (int i = 0; i < direct.Length / 2 && counter != 0; ++i) {
+            currentPosition.x += direct[i][0];
+            currentPosition.y += direct[i][1];
 
             if (!outOfMap(currentPosition) && !map.HasTile(currentPosition)) {
                 setTile(currentPosition, GameTile.TileType.mountain, ref mapController.mountainTextures[mapIndex]);
                 counter--;
             }
             
-            currentPosition.x -= directions[i];
-            currentPosition.y -= directions[i + 1];
+            currentPosition.x -= direct[i][0];
+            currentPosition.y -= direct[i][1];
         }
 
-        Shuffle(directions, directions.Length / 2, directions.Length);
+        Shuffle(direct, direct.Length / 2, direct.Length);
 
-        for (int i = directions.Length - 1; i > 0 && counter != 0; i -= 2) {
-            currentPosition.x += directions[i];
-            currentPosition.y += directions[i - 1];
+        for (int i = direct.Length - 1; i > 0 && counter != 0; i--) {
+            currentPosition.x += direct[i][0];
+            currentPosition.y += direct[i][1];
 
             if (!outOfMap(currentPosition) && !map.HasTile(currentPosition)) {
                 spreadMountain(currentPosition, ref counter);
             }
 
-            currentPosition.x -= directions[i];
-            currentPosition.y -= directions[i - 1];
+            currentPosition.x -= direct[i][0];
+            currentPosition.y -= direct[i][1];
         }
     }
 
-    private static void Shuffle(int[] array, int start, int end) {
-        for (int i = start; i < end; i += 2) {
-            int r = i + randomShuffle.Next(end - i);
-            if (r % 2 != 0) r--;
+    private static void Shuffle<T>(T[] array, int start = 0, int end = -1) {
+        if (end == -1)
+            end = array.Length;
 
-            int t1 = array[r];
-            int t2 = array[r + 1];
+        T temp;
+        int r;
+
+        for (int i = start; i < end; ++i)
+        {
+            r = i + randomShuffle.Next(end - i);
+            temp = array[r];
             array[r] = array[i];
-            array[r + 1] = array[i + 1];
-            array[i] = t1;
-            array[i + 1] = t2;
+            array[i] = temp;
         }
     }
 }

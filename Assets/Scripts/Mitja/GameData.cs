@@ -16,7 +16,7 @@ public static class GameData
     public static GameObject[][] UnitPrefabs;
     public enum UnitType { LightMelee = 0, HeavyMelee = 1, Ranged = 2, Hero = 3};
     public static readonly UnitType[] UnitCreationSequence = 
-        { UnitType.LightMelee, UnitType.LightMelee, UnitType.HeavyMelee, UnitType.HeavyMelee,
+        { UnitType.LightMelee, UnitType.LightMelee, UnitType.LightMelee, UnitType.HeavyMelee, UnitType.HeavyMelee,
         UnitType.Ranged, UnitType.Ranged, UnitType.Hero};
 
     public static void Init(int _numOfPlayers, UnitPrefabs prefabs)
