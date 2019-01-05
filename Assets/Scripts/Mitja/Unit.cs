@@ -55,7 +55,7 @@ public class Unit : MonoBehaviour
         else
         {
             GameState.MovementStart();
-            TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden na koncno pozicijo
+            TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden pridemo na koncno pozicijo
             this.DrawNoMoveLine();
             moving = true;
             return true;
@@ -79,7 +79,7 @@ public class Unit : MonoBehaviour
                     movePath = null;
                     moving = false;
                     ShowPossibleMoves();
-                    GameState.MovementEnd();
+                    GameState.MovementEnd(this, TilePos);
                     return;
                 }
                 else

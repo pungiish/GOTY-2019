@@ -72,15 +72,20 @@ public static class GameState
             }
 
         }
-
     }
+    
 
     public static void MovementStart()
     {
         Interlocked.Increment(ref numOfUnitsMoving);
     }
-    public static void MovementEnd()
+    public static void MovementEnd(Unit u, GameTile endTile)
     {
+        if(endTile.inGameObject != null)
+            GameObject.Destroy(endTile.inGameObject);
+
+        endTile.inGameObject = u.gameObject;
+        
         Interlocked.Decrement(ref numOfUnitsMoving);
     }
     public static bool UnitsMoving()

@@ -6,9 +6,11 @@ using UnityEngine.Tilemaps;
 public class MouseController : MonoBehaviour {
     private Vector3Int position;
     public MapController mapController { private get; set; }
-    
-    private void OnMouseEnter() {
-        if (PauseMenuController.GamePaused) {
+
+    private void OnMouseEnter()
+    {
+        if (PauseMenuController.GamePaused)
+        {
             return;
         }
 
@@ -31,7 +33,6 @@ public class MouseController : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        
         position = Vector3Int.zero;
         position.x = (gameObject.transform.position.x < 0) ? (int)gameObject.transform.position.x - 1 : (int)gameObject.transform.position.x;
         position.y = (gameObject.transform.position.y < 0) ? (int)gameObject.transform.position.y - 1 : (int)gameObject.transform.position.y;
