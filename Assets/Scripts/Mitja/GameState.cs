@@ -41,6 +41,9 @@ public static class GameState
     public static void MouseClicked(Vector3Int pos)
     {
         GameTile posTile = map.GetTile<GameTile>(pos);
+        if (selectedUnit == null && posTile.inGameObject == null) //no game action needed
+            return;
+
         if(posTile.inGameObject == null && selectedUnit != null) // premik
         {
             GameTile unitLoc = selectedUnit.TilePos;
@@ -72,9 +75,9 @@ public static class GameState
                 selectedTile = posTile;
                 u.ShowPossibleMoves();
             }
-            else //izbrana enota je od drugega igralca, probamo napasti
+            else if(selectedUnit != null) //izbrana enota je od drugega igralca, poskusimo napasti
             {
-                //TODO : napad
+                selectedUnit.Fight(u);
             }
 
         }

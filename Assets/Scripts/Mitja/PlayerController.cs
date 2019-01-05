@@ -31,11 +31,15 @@ public class PlayerController : MonoBehaviour {
     public void StartTurn()
     {
         UnitHelpFunctions.PathFinding.Clear(HighlightMap, HighlightTile.TileColor.border, true);
+        foreach (Unit item in Units)
+        {
+            item.StartTurn();
+        }
     }
     public Unit AddNewUnit(GameData.UnitType type, Vector3Int pos)
     {
         Unit u = Instantiate(GameData.UnitPrefabs[0][(int)type]).GetComponent<Unit>();
-        u.Init(this, Map.GetCellCenterWorld(pos), Map.GetTile<GameTile>(pos));
+        u.Init(this, Map.GetCellCenterWorld(pos), Map.GetTile<GameTile>(pos), type);
         Units.Add(u);
         Map.GetTile<GameTile>(pos).setInGameObject(u.gameObject);
         

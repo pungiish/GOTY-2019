@@ -99,7 +99,7 @@ namespace UnitHelpFunctions
                         dbg1 < ht.selectedUnitDistance &&
                         dbg1 <= movePoints)
                     {
-                        ht.selectedUnitDistance = s.Dist + dbg1;//UnitData.MoveWeights[unitIndex, (int)gt.type];
+                        ht.selectedUnitDistance = dbg1;//UnitData.MoveWeights[unitIndex, (int)gt.type];
                         ht.selectedUnitPreviousPath = i;
                         if (colorTiles == true)
                         {

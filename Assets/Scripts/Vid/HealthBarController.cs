@@ -4,23 +4,41 @@ using UnityEngine;
 
 public class HealthBarController : MonoBehaviour {
     public Transform bar;
-    private float barRed = 0.3f;
+    private float barLow = 0.3f;
+    private Color normalHealth = Color.white;
+    private Color lowHealth = Color.red;
+
+    private float MaxHealth = 1.0f;
 
     // call this when player health change
     // arguments: 
     // float sizeNormalized (health between 0 and 1)
 
-    public void setHealth(float sizeNormalized) {
-        if (sizeNormalized < 0.0f || sizeNormalized > 1.0f) {
+    public void setHealthBarColors(Color NormalHealth, Color LowHealth)
+    {
+        normalHealth = NormalHealth;
+        lowHealth = LowHealth;
+    }
+
+    public void SetMaxHealth(float maxHealth)
+    {
+        MaxHealth = maxHealth;
+    }
+
+    public void setHealth(float size) {
+        if(MaxHealth != 1.0f)
+            size /= MaxHealth;
+
+        if (size < 0.0f || size > 1.0f) {
             return;
         }
 
-        bar.localScale = new Vector3(sizeNormalized, 1.0f, 1.0f);
+        bar.localScale = new Vector3(size, 1.0f, 1.0f);
 
-        if (sizeNormalized <= barRed) {
-            setColor(Color.red); // low health is red
+        if (size <= barLow) {
+            setColor(lowHealth); // low health is red
         } else {
-            setColor(Color.white); // normal health is white
+            setColor(normalHealth); // normal health is white
         }
     }
 

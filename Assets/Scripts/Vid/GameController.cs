@@ -67,7 +67,7 @@ public class GameController : MonoBehaviour {
         lineHandler = gameObject.AddComponent<LineRendererHandler>().Init(0.2f, Color.blue, lineRendObject);
         {
             UnitPrefabs prefabs = PrefabsContainer.GetComponent<UnitPrefabs>();
-            GameData.Init(numberOfPlayers, prefabs);
+            GameData.Init(numberOfPlayers, prefabs, healthBar);
         }
 
         for (int i = 0; i < numberOfPlayers; i++)
