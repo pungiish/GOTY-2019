@@ -9,7 +9,7 @@ public class GameTile : Tile {
     public int x { get; private set; }
     public int y { get; private set; }
     public TileType type { get; private set; }
-    public GameObject inGameObject { get; private set; } // gameobject with script InGameObject
+    public GameObject inGameObject { get; set; } // gameobject with script InGameObject
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
     public GameTile init(int x, int y, TileType tp, ref Sprite s) {

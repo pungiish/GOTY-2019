@@ -688,7 +688,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764098de80bfb5b4387882d06150d349, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yellowUnit: {fileID: 1618466900128468, guid: 718af37f9b3cdbe4b8c1b1a73698c0e6, type: 2}
+  selectedUnitPanel: {fileID: 1756957429517980, guid: 4fd01131c803341438c49d27b57731f3,
+    type: 2}
+  ReservedSpacePanel: {fileID: 1410808088255252, guid: 25bcb10dd254f4346ad3ef5f605ac6b3,
+    type: 2}
   Tribe0:
   - {fileID: 1078907700366700, guid: 76c94d05af2a58a469a6e22bf5ea2cb7, type: 2}
   - {fileID: 1049008704722316, guid: a6003a5a3ab6ad84e8e260ad94181311, type: 2}

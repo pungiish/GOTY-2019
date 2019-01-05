@@ -77,6 +77,8 @@ public class GameController : MonoBehaviour {
         }
         generateMap();
 
+        GameState.Init(gameMap.map);
+
         nextTurn();
     }
 
@@ -98,11 +100,11 @@ public class GameController : MonoBehaviour {
             nextTurn();
         }
 
-        if(GameState.selectedUnit != null)
-            GameState.selectedUnit.DrawNoMoveLine();
+        if(GameState.SelectedUnit != null)
+            GameState.SelectedUnit.DrawNoMoveLine();
 
         GameState.selectedPlayer = Players[currentTurn];
-        GameState.selectedUnit = null;
+        GameState.SelectedUnit = null;
 
 
         turnText.text = onTurn + (currentTurn + 1);

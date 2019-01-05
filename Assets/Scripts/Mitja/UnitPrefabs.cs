@@ -4,7 +4,8 @@ using UnityEngine;
 
 //class containing definitions prefabs
 public class UnitPrefabs : MonoBehaviour {
-    public GameObject yellowUnit;
+    public GameObject selectedUnitPanel;
+    public GameObject ReservedSpacePanel;
     public GameObject[] Tribe0;
     public GameObject[] Tribe1;
     public GameObject[] Tribe2;

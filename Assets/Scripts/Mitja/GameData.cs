@@ -11,9 +11,13 @@ public static class GameData
     public const int NumOfDifferentTerrainTypes = 5;
     public const int INF = Int32.MaxValue / 2; //da ne pride do overflowa
     public const int INF_WEIGHT = INF - 1;
+    public static readonly Vector3 PanelInitial = new Vector3(0, 0, 5);
 
     public static int numOfPlayers;
-    public static GameObject[][] UnitPrefabs;
+    public static GameObject[][] UnitPrefabs { get; private set; }
+    public static GameObject SelectedUnitPanel { get; private set; }
+    public static GameObject ReservedSpacePanel { get; private set; }
+
     public enum UnitType { LightMelee = 0, HeavyMelee = 1, Ranged = 2, Hero = 3};
     public static readonly UnitType[] UnitCreationSequence = 
         { UnitType.LightMelee, UnitType.LightMelee, UnitType.LightMelee, UnitType.HeavyMelee, UnitType.HeavyMelee,
@@ -27,6 +31,13 @@ public static class GameData
         UnitPrefabs[0] = prefabs.Tribe0;
         UnitPrefabs[1] = prefabs.Tribe1;
         UnitPrefabs[2] = prefabs.Tribe2;
+
+        SelectedUnitPanel = GameObject.Instantiate(prefabs.selectedUnitPanel);
+        SelectedUnitPanel.transform.position = PanelInitial;
+
+        ReservedSpacePanel = GameObject.Instantiate(prefabs.ReservedSpacePanel);
+        SelectedUnitPanel.transform.position = PanelInitial; 
+        
     }
 
     public static readonly int[,] MoveWeights = {
