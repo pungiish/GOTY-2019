@@ -635,7 +635,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9f24c9a00791fb94eaecabbd2cb265db, type: 3}
   mountainTextures:
   - {fileID: 21300000, guid: 6c52d68efd8523643b0319622f5576c3, type: 3}
-  highlightTexture: {fileID: 21300000, guid: 3f8dc95667f1a90428de43cff15104d5, type: 3}
+  highlightTextures:
+  - {fileID: 21300000, guid: 3f8dc95667f1a90428de43cff15104d5, type: 3}
+  - {fileID: 21300000, guid: 4e88346a54310f849a79e505297b5be0, type: 3}
+  - {fileID: 21300000, guid: 656b08663bae02347bdebb24a7fc5fc7, type: 3}
   warriors:
   - {fileID: 1030536209844266, guid: 285aae8d44539c44f897d0ba02e27a29, type: 2}
   - {fileID: 1988532726079294, guid: 53d1bbb086f74024a8402a72a8396073, type: 2}
