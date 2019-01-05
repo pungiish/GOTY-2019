@@ -93,8 +93,6 @@ public class MapGenerator : object {
             GameObject gameObject2 = players[player].AddNewUnit(GameData.UnitCreationSequence[i], position).gameObject; 
             (map.GetTile(position) as GameTile).setInGameObject(gameObject2);
 
-            Debug.Log("Unit created at: " + position.x + ' ' + position.y);
-
             position.x -= direct[i][0]; position.y -= direct[i][1];
         }
     }

@@ -21,8 +21,7 @@ public class MouseController : MonoBehaviour {
         Tile selected = ScriptableObject.CreateInstance<Tile>();
         selected.sprite = mapController.selectedTile;
         mapController.selectMap.SetTile(position, selected);
-        Debug.Log("Position: " + position.x + ',' + position.y);
-
+      
         //risanje crte premika
         GameState.TileEntered(position);
     }
