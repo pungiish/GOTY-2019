@@ -689,6 +689,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yellowUnit: {fileID: 1618466900128468, guid: 718af37f9b3cdbe4b8c1b1a73698c0e6, type: 2}
+  Tribe0:
+  - {fileID: 1078907700366700, guid: 76c94d05af2a58a469a6e22bf5ea2cb7, type: 2}
+  - {fileID: 1049008704722316, guid: a6003a5a3ab6ad84e8e260ad94181311, type: 2}
+  - {fileID: 1164977983824798, guid: 8e134c1df9ce926488987edec5b53250, type: 2}
+  - {fileID: 1850067553035460, guid: d2cd6f97362018641adab9032932e23f, type: 2}
+  Tribe1:
+  - {fileID: 1376982348141996, guid: ef0669b3ef2e05042a128d2cafb22cd2, type: 2}
+  - {fileID: 1999269456626252, guid: b6812ae9da86a2d4f934895489b3de22, type: 2}
+  - {fileID: 1184770666236352, guid: 6d36a49a4c86647478615d4348c79b2a, type: 2}
+  - {fileID: 1621681021562790, guid: c2da63a17d6220d418483ae93ab44095, type: 2}
+  Tribe2:
+  - {fileID: 1740719643117920, guid: 232089e1a4e4aa7429b27928191982e4, type: 2}
+  - {fileID: 1775085242225550, guid: 948270e957d07694db38f435ab72e0a0, type: 2}
+  - {fileID: 1217259321573442, guid: 1d2df624c8e57b3458d067867421d021, type: 2}
+  - {fileID: 1624548741188446, guid: 20421edeca0219847868d9ef62484984, type: 2}
 --- !u!1 &681097999
 GameObject:
   m_ObjectHideFlags: 0

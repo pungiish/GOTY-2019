@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LineRendererHandler : MonoBehaviour {
-    private LinkedList<GameObject> objects = new LinkedList<GameObject>();
     private LinkedList<LineRenderer> renderers = new LinkedList<LineRenderer>();
     private GameObject lineRendObject;
 

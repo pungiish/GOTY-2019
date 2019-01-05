@@ -6,21 +6,27 @@ using UnityEngine;
 
 public static class GameData
 {
-    public const int NumOfDifferentTribes = 1;
-    public const int NumOfDifferentUnits = 1;
+    public const int NumOfDifferentTribes = 3;
+    public const int NumOfDifferentUnits = 4;
     public const int NumOfDifferentTerrainTypes = 5;
     public const int INF = Int32.MaxValue / 2; //da ne pride do overflowa
     public const int INF_WEIGHT = INF - 1;
 
     public static int numOfPlayers;
-    public static GameObject[,] UnitPrefabs;
+    public static GameObject[][] UnitPrefabs;
+    public enum UnitType { LightMelee = 0, HeavyMelee = 1, Ranged = 2, Hero = 3};
+    public static readonly UnitType[] UnitCreationSequence = 
+        { UnitType.LightMelee, UnitType.LightMelee, UnitType.HeavyMelee, UnitType.HeavyMelee,
+        UnitType.Ranged, UnitType.Ranged, UnitType.Hero};
 
     public static void Init(int _numOfPlayers, UnitPrefabs prefabs)
     {
         numOfPlayers = _numOfPlayers;
-        UnitPrefabs = new GameObject[NumOfDifferentTribes, NumOfDifferentUnits];
-
-        UnitPrefabs[0, 0] = prefabs.yellowUnit;
+        UnitPrefabs = new GameObject[NumOfDifferentTribes][];
+        
+        UnitPrefabs[0] = prefabs.Tribe0;
+        UnitPrefabs[1] = prefabs.Tribe1;
+        UnitPrefabs[2] = prefabs.Tribe2;
     }
 
     public static readonly int[,] MoveWeights = {

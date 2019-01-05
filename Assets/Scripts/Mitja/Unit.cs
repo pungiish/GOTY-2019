@@ -6,7 +6,7 @@ using System;
 
 public class Unit : MonoBehaviour
 {
-    public GameObject GameObj = null;
+   // public GameObject GameObj = null;
     private static Int32[,] distanceMap;
     
     public int Attack { get; private set;}
@@ -24,7 +24,6 @@ public class Unit : MonoBehaviour
     public Unit Init(PlayerController player, Vector3 pos, GameTile tile)
     {
         //this.transform.SetParent(pos.gameObject.transform, true);
-        Debug.Log("Init unit");
         pos.z -= 2.0f;
         this.transform.position = pos;
         
@@ -51,7 +50,6 @@ public class Unit : MonoBehaviour
 
         if (movePath == null)
         {
-            Debug.Log("Cannot move");
             return false;
         }
         else
@@ -60,7 +58,6 @@ public class Unit : MonoBehaviour
             TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden na koncno pozicijo
             this.DrawNoMoveLine();
             moving = true;
-            Debug.Log("StartMovement");
             return true;
         }
     }
@@ -69,7 +66,6 @@ public class Unit : MonoBehaviour
     void Update () {
         if (moving == true && movePath != null)
         {
-            Debug.Log("MOVING");
             float speed = 3.0f;
             float step = speed * Time.deltaTime;
             Vector3 currPos = this.transform.position;

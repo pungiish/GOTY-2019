@@ -23,7 +23,6 @@ public class HighlightTile : Tile {
     }
 
     public void changeColor(Color _color) {
-        //Debug.Log("ok");
         this.color = _color;
     }
 

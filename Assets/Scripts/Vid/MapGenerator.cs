@@ -26,7 +26,6 @@ public class MapGenerator : object {
         mapIndex = i;
         minN = Math.Max((w * h) / 500, 1);
         maxN = Math.Max((w * h) / 250, 1);
-        //Debug.Log(minN.ToString() + " " + maxN.ToString());
         map = tilemap;
         highlightMap = highlight;
         selectMap = selected;
@@ -77,19 +76,18 @@ public class MapGenerator : object {
     }
 
     private void buildBase(int player, Vector3Int position) {
-        //Debug.Log(position.ToString());
         GameObject gameObject = GameObject.Instantiate(mapController.buildings[GameController.selectedWarriorAndBuilding[player]]); // potrebno se nastaviti edino kateremu igralcu pripada
         gameObject.transform.position += position;
         (map.GetTile(position) as GameTile).setInGameObject(gameObject);
 
         Shuffle(directions, directions.Length / 2, directions.Length);
-        for (int i = 0; i < 6 * 2; i += 2) {
-            position.x += directions[i]; position.y += directions[i + 1];
+        for (int i = 0; i < GameData.UnitCreationSequence.Length; ++i) {
+            position.x += directions[2 * i]; position.y += directions[2 * i + 1];
 
-            GameObject gameObject2 = players[player].AddNewUnit(PlayerController.UnitType.Hero, position).gameObject; 
+            GameObject gameObject2 = players[player].AddNewUnit(GameData.UnitCreationSequence[i], position).gameObject; 
             (map.GetTile(position) as GameTile).setInGameObject(gameObject2);
             
-            position.x -= directions[i]; position.y -= directions[i + 1];
+            position.x -= directions[2 * i]; position.y -= directions[2 * i + 1];
         }
     }
 
@@ -102,8 +100,7 @@ public class MapGenerator : object {
         for (counter = 0; counter < GameController.numberOfPlayers; counter++) {
             x1 = boundaries[(counter % 4)*4]; x2 = boundaries[(counter % 4) * 4 + 1];
             y1 = boundaries[(counter % 4) * 4 + 2]; y2 = boundaries[(counter % 4) * 4 + 3];
-
-            //Debug.Log(x1 + " " + x2 + " " + y1 + " " + y2);
+            
             while (true) {
                 randX = UnityEngine.Random.Range(x1 + offset, x2 - offset);
                 randY = UnityEngine.Random.Range(y1 + offset, y2 - offset);
@@ -113,7 +110,6 @@ public class MapGenerator : object {
                     break;
                 }
             }
-            //Debug.Log(i + " " + randX + " " + randY);
             
             buildBase(counter, position);
         }

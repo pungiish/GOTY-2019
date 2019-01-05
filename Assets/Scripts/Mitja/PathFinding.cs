@@ -47,19 +47,8 @@ namespace UnitHelpFunctions
             return t.cellBounds.Contains(new Vector3Int(x, y, z));
         }
         public static void FindPossibleMoves(int posX, int posY, int movePoints, int unitIndex, Tilemap map, 
-            Tilemap highlight, bool coloriTiles = true)
+            Tilemap highlight, bool colorTiles = true)
         {
-            if(map == null)
-            {
-                Debug.Log("map = null");
-            }
-            if(highlight == null)
-            {
-                Debug.Log("highlight = null");
-            }
-            int currX = posX;
-            int currY = posY;
-
             Clear(highlight);
 
             //sortedSet in priority queue ni podprt v Unity, zato uporabimo SortedDictionary kot priority queue
@@ -77,9 +66,8 @@ namespace UnitHelpFunctions
             while (Pq.Count > 0)
             {
                 //Polje z najkrajso razdaljo vzamemo iz vrste
-                //Debug.Log("Start");
                 s = Pq.Keys.First<Str>();
-//Debug.Log("End");
+                
                 Pq.Remove(s);
 
                 pos.x = s.x; pos.y = s.y;
@@ -100,17 +88,23 @@ namespace UnitHelpFunctions
                     ht = highlight.GetTile<HighlightTile>(pos);
                     gt = map.GetTile<GameTile>(pos);
 
+                    if(ht == null || gt == null) // out of bounds
+                    {
+                        continue;
+                    }
+
                     //pri ceni premika se uposteva utez polja, na katerega gremo (in ne utez polja na katerem smo)
+                   
                     int dbg1 = s.Dist + GameData.MoveWeights[unitIndex, (int)gt.type];
                     if (InBounds(highlight, pos.x, pos.y) &&
-                       dbg1 < ht.selectedUnitDistance && 
-                       dbg1 <= movePoints)
+                        dbg1 < ht.selectedUnitDistance &&
+                        dbg1 <= movePoints)
                     {
                         ht.selectedUnitDistance = s.Dist + dbg1;//UnitData.MoveWeights[unitIndex, (int)gt.type];
                         ht.selectedUnitPreviousPath = i;
-                        ht.changeColor(HighlightTile.TileColor.green);
-                        if(coloriTiles == true)
-                            Debug.Log("Green: " + ht.selectedUnitDistance + ", " + pos.x + ", " + pos.y);
+                        if (colorTiles == true)
+                            ht.changeColor(HighlightTile.TileColor.green);
+
                         Pq.Add(new Str(ht.selectedUnitDistance, pos.x, pos.y), '.');
                     }
                 }
@@ -160,11 +154,6 @@ namespace UnitHelpFunctions
 
         private static void Clear(Tilemap highlight)
         {
-            Debug.Log("Clear");
-            if(highlight == null)
-            {
-                Debug.Log("highlight");
-            }
             Vector3Int min = highlight.cellBounds.min;
             Vector3Int max = highlight.cellBounds.max;
             Vector3Int vec = new Vector3Int(0, 0, 0);
@@ -176,10 +165,6 @@ namespace UnitHelpFunctions
                 {
                     vec.y = y;
                     HighlightTile t = highlight.GetTile<HighlightTile>(vec);
-                    if(t == null)
-                    {
-                        Debug.Log("t = null" + x + ", " + y);
-                    }
                     t.selectedUnitDistance = GameData.INF;
                     t.selectedUnitPreviousPath = -1;
                     t.changeColor(HighlightTile.TileColor.red);

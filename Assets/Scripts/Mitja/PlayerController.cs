@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
-
 public class PlayerController : MonoBehaviour {
     //public string PlayerName { get; private set; }
     public enum Tribe { A, B, C, Undefined };
-    public enum UnitType { LightMelee, HeavyMelee, Ranged, Hero };
     
     public string PlayerName { get; private set; }
     public Tribe PlayerTribe { get; private set; }
@@ -31,9 +28,9 @@ public class PlayerController : MonoBehaviour {
     
 	void Start () {}
 
-    public Unit AddNewUnit(UnitType type, Vector3Int pos)
+    public Unit AddNewUnit(GameData.UnitType type, Vector3Int pos)
     {
-        Unit u = Instantiate(GameData.UnitPrefabs[0,0]).GetComponent<Unit>();
+        Unit u = Instantiate(GameData.UnitPrefabs[0][(int)type]).GetComponent<Unit>();
         u.Init(this, Map.GetCellCenterWorld(pos), Map.GetTile<GameTile>(pos));
         Units.Add(u);
         Map.GetTile<GameTile>(pos).setInGameObject(u.gameObject);

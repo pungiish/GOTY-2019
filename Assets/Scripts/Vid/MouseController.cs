@@ -42,7 +42,6 @@ public class MouseController : MonoBehaviour {
         if(selectedTile.inGameObject != null)
         {
             Unit u = selectedTile.inGameObject.GetComponent<Unit>();
-            Debug.Log("Selected unit changed");
             if (u != null && u.player == GameState.selectedPlayer)
             {
                 GameState.selectedUnit = u;

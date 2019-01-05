@@ -27,7 +27,6 @@ public class GameTile : Tile {
 
     public void setInGameObject(GameObject _inGameObject) {
         inGameObject = _inGameObject;
-      //  Debug.Log(inGameObject.ToString());
     }
 
     public TileType getType() {
@@ -38,11 +37,11 @@ public class GameTile : Tile {
         if (PauseMenuController.GamePaused) {
             return;
         }
-
+        /*
         if (inGameObject != null) {
           //  inGameObject.Click();
-            Debug.Log("clicked");
         }
+        */
     }
 }
  
