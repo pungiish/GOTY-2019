@@ -2,22 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour {
-    public Text results;
-    public Button shareOnFacebookButton;
+    public int menuScene;
+    public Text resut;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void Start() {
+        // prebere se result iz playerprefs, shrani se na koncu igre
+    }
 
-    void shareOnFacebook() {
-        // call API for sharing on Facebook
+    public void goToMainMenu() {
+        SceneManager.LoadScene(menuScene);
     }
 }

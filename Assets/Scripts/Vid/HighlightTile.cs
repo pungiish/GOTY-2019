@@ -10,33 +10,34 @@ public class HighlightTile : Tile {
     public int y { get; private set; }
     public int selectedUnitDistance;
     public int selectedUnitPreviousPath;
-    private TileColor tileColor;
+    public TileColor tileColor { get; private set; }
+    private MapController mapController;
 
     // this method is 'constructor' - used in ScriptableObject.CreateInstance
-    public HighlightTile init(int x, int y, TileColor tc, ref Sprite s) {
+    public HighlightTile init(int x, int y, ref MapController mapC) {
         this.x = x;
         this.y = y;
-        this.tileColor = tc;
-        this.sprite = s;
+        this.tileColor = TileColor.border;
+        this.mapController = mapC;
+        this.sprite = mapController.highlightTextures[0];
 
         return this;
-    }
-
-    public void changeColor(Color _color) {
-        this.color = _color;
     }
 
     public void changeColor(TileColor _color)
     {
         switch (_color) {
             case TileColor.red:
-                this.color = Color.red;
+                tileColor = _color;
+                sprite = mapController.highlightTextures[1];
                 break;
             case TileColor.green:
-                this.color = Color.green;
+                tileColor = _color;
+                sprite = mapController.highlightTextures[2];
                 break;
             default:
-                this.color = Color.gray;
+                tileColor = TileColor.border;
+                sprite = mapController.highlightTextures[0];
                 break;
         }
     }
