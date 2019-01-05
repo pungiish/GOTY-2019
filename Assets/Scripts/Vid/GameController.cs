@@ -77,7 +77,7 @@ public class GameController : MonoBehaviour {
         }
         generateMap();
 
-        GameState.Init(gameMap.map);
+        GameState.Init(gameMap.map, gameMap.highlight);
 
         nextTurn();
     }
@@ -95,17 +95,18 @@ public class GameController : MonoBehaviour {
 
     // call this to change to next turn
     public void nextTurn() {
-        currentTurn = (currentTurn + 1) % numberOfPlayers;
-        if (!alivePlayers[currentTurn]) {
-            nextTurn();
-        }
+        do
+        {
+            currentTurn = (currentTurn + 1) % numberOfPlayers;
+        } while (!alivePlayers[currentTurn]);
 
-        if(GameState.SelectedUnit != null)
+        if (GameState.SelectedUnit != null)
             GameState.SelectedUnit.DrawNoMoveLine();
 
         GameState.selectedPlayer = Players[currentTurn];
         GameState.SelectedUnit = null;
 
+        Players[currentTurn].StartTurn();
 
         turnText.text = onTurn + (currentTurn + 1);
         turnCountdownController.resetAndStart();

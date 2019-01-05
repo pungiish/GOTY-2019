@@ -11,12 +11,14 @@ public static class GameState
     public static PlayerController selectedPlayer = null;
     private static Unit selectedUnit = null;
     public static Tilemap map = null;
+    public static Tilemap highlight = null;
 
     private static GameTile selectedTile = null;
 
-    public static void Init(Tilemap _map)
+    public static void Init(Tilemap _map, Tilemap _highlight)
     {
         map = _map;
+        highlight = _highlight;
     }
     
     public static Unit SelectedUnit { get { return selectedUnit; }
@@ -59,6 +61,7 @@ public static class GameState
             {
                 selectedUnit.DrawNoMoveLine();
                 SelectedUnit = null;
+                UnitHelpFunctions.PathFinding.Clear(highlight, HighlightTile.TileColor.border, true);
             }
             else if (u.player == selectedPlayer)
             {//izbrana enota se menja

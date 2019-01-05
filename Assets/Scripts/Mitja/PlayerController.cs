@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour {
     
 	void Start () {}
 
+    public void StartTurn()
+    {
+        UnitHelpFunctions.PathFinding.Clear(HighlightMap, HighlightTile.TileColor.border, true);
+    }
     public Unit AddNewUnit(GameData.UnitType type, Vector3Int pos)
     {
         Unit u = Instantiate(GameData.UnitPrefabs[0][(int)type]).GetComponent<Unit>();

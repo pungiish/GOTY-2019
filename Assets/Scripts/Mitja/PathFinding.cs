@@ -49,8 +49,7 @@ namespace UnitHelpFunctions
         public static void FindPossibleMoves(int posX, int posY, int movePoints, int unitIndex, Tilemap map, 
             Tilemap highlight, bool colorTiles = true)
         {
-            Clear(highlight);
-
+            Clear(highlight, HighlightTile.TileColor.red, false);
             //sortedSet in priority queue ni podprt v Unity, zato uporabimo SortedDictionary kot priority queue
             SortedDictionary<Str, Char> Pq = new SortedDictionary<Str, Char>();
 
@@ -109,7 +108,8 @@ namespace UnitHelpFunctions
                     }
                 }
             }
-
+            if(colorTiles)
+                highlight.RefreshAllTiles();
 
         }
 
@@ -152,7 +152,7 @@ namespace UnitHelpFunctions
             return positions;
         }
 
-        private static void Clear(Tilemap highlight)
+        public static void Clear(Tilemap highlight, HighlightTile.TileColor color, bool refresh)
         {
             Vector3Int min = highlight.cellBounds.min;
             Vector3Int max = highlight.cellBounds.max;
@@ -167,9 +167,14 @@ namespace UnitHelpFunctions
                     HighlightTile t = highlight.GetTile<HighlightTile>(vec);
                     t.selectedUnitDistance = GameData.INF;
                     t.selectedUnitPreviousPath = -1;
-                    t.changeColor(HighlightTile.TileColor.red);
+
+
+                    t.changeColor(color);
+
                 }
             }
+            if(refresh)
+                highlight.RefreshAllTiles();
         }
     }
 }

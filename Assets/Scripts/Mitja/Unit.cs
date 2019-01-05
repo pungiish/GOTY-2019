@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     public GameTile TilePos { get; private set; }
     public PlayerController player { get; private set; }
     private Tilemap Map;
+    private Tilemap Highlight;
     
     // Use this for initialization
    void Start () {}
@@ -30,6 +31,7 @@ public class Unit : MonoBehaviour
         this.player = player;
         this.TilePos = tile;
         Map = player.Map;
+        
         return this;
     }
 
@@ -54,6 +56,7 @@ public class Unit : MonoBehaviour
         }
         else
         {
+            UnitHelpFunctions.PathFinding.Clear(player.HighlightMap, HighlightTile.TileColor.border, true);
             GameState.MovementStart();
             TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden pridemo na koncno pozicijo
             this.DrawNoMoveLine();
@@ -78,7 +81,6 @@ public class Unit : MonoBehaviour
                 {
                     movePath = null;
                     moving = false;
-                    ShowPossibleMoves();
                     GameState.MovementEnd(this, TilePos);
                     return;
                 }
