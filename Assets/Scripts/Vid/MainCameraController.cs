@@ -18,7 +18,10 @@ public class MainCameraController : MonoBehaviour {
     }
 	
 	void Update () {
-        // TODO - you can move to the end of the map (not screen) - checkk how big is map minus camera size and so on...
+        if (PauseMenuController.GamePaused) {
+            return;
+        }
+
         Vector3 camPos = transform.position;
         int tempX = (int)((Input.mousePosition.x / Screen.width) * 100);
         int tempY = (int)((Input.mousePosition.y / Screen.height) * 100);

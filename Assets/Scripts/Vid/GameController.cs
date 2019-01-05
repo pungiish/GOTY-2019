@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
     //private List<PlayerController> players;
-    private bool playSound;
+    public static bool playSound;
     public MapController gameMap;
     public List<PlayerController> Players { get; private set; } 
     public int width;
     public int height;
-    public static int numberOfPlayers = 2; // ti dve spremenljivki se inicializirata po game menu
+    public static int numberOfPlayers = 2; // ta spremenljivka se inicializira po game menu
     public static List<int> selectedWarriorAndBuilding = new List<int>();
     public static List<bool> alivePlayers = new List<bool>();
     public static List<GameObject> healthBars = new List<GameObject>();
@@ -20,6 +20,7 @@ public class GameController : MonoBehaviour {
     public Text turnText;
     private const string onTurn = "On turn\n";
     public TurnCountdownController turnCountdownController;
+    public Text turnChangeText;
 
     private void initPlayer(int index, int selectedWB) {
         selectedWarriorAndBuilding.Add(selectedWB);
@@ -52,6 +53,12 @@ public class GameController : MonoBehaviour {
 
     private LineRendererHandler lineHandler;
 
+    // v playerprefs so shranjeni podatki:
+    // stevilo igralcev v "players"
+    // izbrana rasa v "playerX" (X je index igralca)
+    // izbrana mapa v "map"
+    // ko bo grafika integrirana v igro, se morajo samo te vrednosti prebrati in uporabati
+
     void Start ()
     {
         Players = new List<PlayerController>();
@@ -73,6 +80,17 @@ public class GameController : MonoBehaviour {
         nextTurn();
     }
 
+    private IEnumerator ChangeTurnTextAppear() {
+        turnChangeText.text = "Player " + (currentTurn + 1) + " turn!";
+        turnChangeText.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(2);
+
+        turnChangeText.gameObject.SetActive(false);
+
+        yield return null;
+    }
+
     // call this to change to next turn
     public void nextTurn() {
         currentTurn = (currentTurn + 1) % numberOfPlayers;
@@ -89,6 +107,8 @@ public class GameController : MonoBehaviour {
 
         turnText.text = onTurn + (currentTurn + 1);
         turnCountdownController.resetAndStart();
+
+        StartCoroutine(ChangeTurnTextAppear());
     }
 
     // call this to get player on the turn
@@ -98,5 +118,9 @@ public class GameController : MonoBehaviour {
 
     private void generateMap() {
         gameMap.startMapGenerator(width, height, Players);
+    }
+
+    public void openPauseMenu() {
+
     }
 }

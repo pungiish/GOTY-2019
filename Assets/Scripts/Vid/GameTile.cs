@@ -35,6 +35,10 @@ public class GameTile : Tile {
     }
 
     public void clickEvent() {
+        if (PauseMenuController.GamePaused) {
+            return;
+        }
+
         if (inGameObject != null) {
           //  inGameObject.Click();
             Debug.Log("clicked");
