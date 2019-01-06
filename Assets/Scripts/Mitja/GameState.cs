@@ -82,7 +82,6 @@ public static class GameState
 
         }
     }
-    
 
     public static void MovementStart()
     {

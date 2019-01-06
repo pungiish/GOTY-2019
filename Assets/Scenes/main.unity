@@ -695,6 +695,10 @@ MonoBehaviour:
     type: 2}
   ReservedSpacePanel: {fileID: 1410808088255252, guid: 25bcb10dd254f4346ad3ef5f605ac6b3,
     type: 2}
+  FightingSwordSprite: {fileID: 1808969755583840, guid: b75969f8b5d84b6469a5fb577280eb8a,
+    type: 2}
+  TextRenderer: {fileID: 1388424114715772, guid: 9e1f1a1a88f70c24f9b3d42f07bd57a8,
+    type: 2}
   Tribe0:
   - {fileID: 1078907700366700, guid: 76c94d05af2a58a469a6e22bf5ea2cb7, type: 2}
   - {fileID: 1049008704722316, guid: a6003a5a3ab6ad84e8e260ad94181311, type: 2}

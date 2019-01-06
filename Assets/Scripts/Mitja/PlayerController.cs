@@ -55,4 +55,16 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void UnitDestroyed(Unit u)
+    {
+        if(Units.Remove(u) == false)
+        {
+            Debug.LogError("Destroyed unit not found in unit list");
+        }
+        u.TilePos.inGameObject = null; //nobena enota vec ne zaseda objekta
+        u.gameObject.SetActive(false);
+       // GameObject.Destroy(u.gameObject);
+       
+    }
 }

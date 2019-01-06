@@ -17,7 +17,10 @@ public static class GameData
     public static GameObject[][] UnitPrefabs { get; private set; }
     public static GameObject SelectedUnitPanel { get; private set; }
     public static GameObject ReservedSpacePanel { get; private set; }
+    public static GameObject FightingSwordSprite { get; private set; }
+    public static GameObject TextRenderer { get; private set; }
     public static GameObject HealthBar { get; private set; }
+
 
     public enum UnitType { LightMelee = 0, HeavyMelee = 1, Ranged = 2, Hero = 3};
     public static readonly UnitType[] UnitCreationSequence = 
@@ -38,6 +41,9 @@ public static class GameData
 
         ReservedSpacePanel = GameObject.Instantiate(prefabs.ReservedSpacePanel);
         SelectedUnitPanel.transform.position = PanelInitial;
+
+        FightingSwordSprite = prefabs.FightingSwordSprite;
+        TextRenderer = prefabs.TextRenderer;
 
         HealthBar = _healthBar;
     }

@@ -59,11 +59,11 @@ public class GameController : MonoBehaviour {
     // izbrana mapa v "map"
     // ko bo grafika integrirana v igro, se morajo samo te vrednosti prebrati in uporabati
 
-    void Start ()
+    void Start()
     {
         Players = new List<PlayerController>();
         Players.Capacity = numberOfPlayers;
-        
+
         lineHandler = gameObject.AddComponent<LineRendererHandler>().Init(0.2f, Color.blue, lineRendObject);
         {
             UnitPrefabs prefabs = PrefabsContainer.GetComponent<UnitPrefabs>();

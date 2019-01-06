@@ -82,7 +82,6 @@ public class Unit : MonoBehaviour
         {
             int dbg = MovePoints;
             MovePoints -= player.HighlightMap.GetTile<HighlightTile>(pos).selectedUnitDistance;
-            Debug.Log("MovePoints: " + dbg + "   " + MovePoints);
             UnitHelpFunctions.PathFinding.Clear(player.HighlightMap, HighlightTile.TileColor.border, true);
             GameState.MovementStart();
             TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden pridemo na koncno pozicijo
@@ -165,7 +164,7 @@ public class Unit : MonoBehaviour
         if (dist > 1)
         {
             if (dist > this.FightRange) //ne pride do napada
-                return;
+               return;
             else
                 thisDamage = this.BaseRanged;
 
@@ -180,33 +179,57 @@ public class Unit : MonoBehaviour
             oppDamage = opponent.BaseMelee;
         }
 
-        //napadalec ima prednost v prvem krogu napada
+        StartCoroutine(FightCoroutine(opponent, thisDamage, oppDamage));
+    }
 
-        for (int i = 0; i < 2; ++i)
+    private IEnumerator FightCoroutine(Unit opponent, int thisDamage, int oppDamage)
+    {
+        FightingUIController UIController = new FightingUIController(this, opponent);
+        //napadalec ima prednost v prvem krogu napada
+        const int NumOfRounds = 2;
+        float currHitDamage;
+        for (int i = 0; i < NumOfRounds; ++i)
         {
+            yield return new WaitForSeconds(0.5f);
+
             //udari prva enota - pri prvem udarcu ima "bonus presenecenja, dodatnih 50% skode
             if (i == 0)
-                opponent.HealthPoints -= (float)((thisDamage * 1.5) / (1 + 0.1 * opponent.Defence));
+                currHitDamage = (float)((thisDamage * 1.5) / (1 + 0.1 * opponent.Defence));
             else
-                opponent.HealthPoints -= (float)(thisDamage / (1 + 0.1 * opponent.Defence));
+                currHitDamage = (float)(thisDamage / (1 + 0.1 * opponent.Defence));
 
+            UIController.PlayerAttack(FightingUIController.Attacker.unit1, currHitDamage);
+
+            opponent.HealthPoints -= currHitDamage;
             if (opponent.HealthPoints <= 0.0)   //nasprotnik unicen
             {
-                Debug.Log("Rund " + i.ToString() + " " + this.ToString() + " | " + opponent.ToString());
-                return;
+                opponent.healthBar.setHealth(0.0f);
+                opponent.player.UnitDestroyed(opponent);
+                UIController.FightingEnd(false, true);
+                yield break;
             }
             opponent.healthBar.setHealth(opponent.HealthPoints);
-            
+            yield return new WaitForSeconds(0.5f);
+
             //druga enota
             if (oppDamage > 0) //ce je napadalec v dosegu orozja
-                this.HealthPoints -= (float)(oppDamage / (1 + 0.1 * this.Defence));
-            
-            if (HealthPoints <= 0.0) //napadalec unicen
-                return;
+                currHitDamage = (float)(oppDamage / (1 + 0.1 * this.Defence));
+            else
+                currHitDamage = 0.0f; //drugace je 0
+
+            UIController.PlayerAttack(FightingUIController.Attacker.unit2, currHitDamage);
+            this.HealthPoints -= currHitDamage;
+
+            if (HealthPoints <= 0.0)
+            { //napadalec unicen
+                this.healthBar.setHealth(0.0f);
+                this.player.UnitDestroyed(this);
+                UIController.FightingEnd(true, false);
+                yield break;
+            }
 
             this.healthBar.setHealth(this.HealthPoints);
         }
-        
+        UIController.FightingEnd(false, false);
     }
-    
 }

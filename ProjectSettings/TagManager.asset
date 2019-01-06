@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - SpriteTop
   - 
   - 
   - 
@@ -40,4 +40,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: SpriteTop
+    uniqueID: 2532979767
     locked: 0
