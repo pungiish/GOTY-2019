@@ -80,20 +80,57 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            int dbg = MovePoints;
             MovePoints -= player.HighlightMap.GetTile<HighlightTile>(pos).selectedUnitDistance;
             UnitHelpFunctions.PathFinding.Clear(player.HighlightMap, HighlightTile.TileColor.border, true);
             GameState.MovementStart();
             TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden pridemo na koncno pozicijo
             this.DrawNoMoveLine();
             moving = true;
+            StartCoroutine(MoveCoroutine());
             return true;
         }
     }
 
+    private IEnumerator MoveCoroutine()
+    {
+        if (movePath == null)
+            yield break;
+
+        float speed = 3.0f;
+        float step = speed * Time.deltaTime;
+
+        Vector3 currPos = this.transform.position;
+        Vector3 targetPos = Map.GetCellCenterWorld(movePath.First.Value);
+
+        while (true)
+        {
+            currPos = this.transform.position;
+
+            if (currPos.Equals(targetPos))
+            {
+                movePath.RemoveFirst();
+                if(movePath.Count == 0) //premik koncan
+                    break;
+
+                targetPos = Map.GetCellCenterWorld(movePath.First.Value);
+            }
+            this.transform.position = Vector3.MoveTowards(currPos, targetPos, step);
+            yield return 0;
+        }
+        this.transform.position = Vector3.MoveTowards(currPos, targetPos, step);
+        movePath = null;
+        moving = false;
+        GameState.MovementEnd(this, TilePos);
+    }
     // Update is called once per frame
+    Vector3 dbgpos = new Vector3();
     void Update () {
-        if (moving == true && movePath != null)
+        if(moving == true)
+        {
+            Debug.Log("position: " + (this.transform.position - dbgpos).magnitude + ", time: " + Time.unscaledDeltaTime);
+            dbgpos = this.transform.position;
+        }
+      /*  if (moving == true && movePath != null)
         {
             float speed = 3.0f;
             float step = speed * Time.deltaTime;
@@ -116,7 +153,7 @@ public class Unit : MonoBehaviour
                 }
             }
             this.transform.position = Vector3.MoveTowards(currPos, targetPos, step);
-        }
+        }*/
 	}
     
     public void DrawMoveLineToDest(Vector3Int dest)

@@ -57,6 +57,7 @@ public static class GameState
             
             unitLoc.inGameObject = null; //sprostimo prejsnjo lokacijo
             SelectedUnit = null;
+            return;
         }
         if (posTile.inGameObject != null)
         {
