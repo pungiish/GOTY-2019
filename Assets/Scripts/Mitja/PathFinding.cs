@@ -92,6 +92,9 @@ namespace UnitHelpFunctions
                         continue;
                     }
 
+                    if (gt.inGameObject != null) //ne moremo iti cez druge objekte
+                        continue; 
+
                     //pri ceni premika se uposteva utez polja, na katerega gremo (in ne utez polja na katerem smo)
                    
                     int dbg1 = s.Dist + GameData.MoveWeights[unitIndex, (int)gt.type];
@@ -103,6 +106,33 @@ namespace UnitHelpFunctions
                         ht.selectedUnitPreviousPath = i;
                         if (colorTiles == true)
                         {
+                            ht.changeColor(HighlightTile.TileColor.green);
+                            GameTile ngt;
+                            Unit nu;
+                            for (int pr = 0; pr < 4; ++pr)
+                            {
+                                pos.x += premik[pr, 0];
+                                pos.y += premik[pr, 1];
+
+                                ngt = map.GetTile<GameTile>(pos);
+                                if (ngt == null || ngt.inGameObject == null)
+                                {
+                                    pos.x -= premik[pr, 0]; pos.y -= premik[pr, 1];
+                                    continue;
+                                }
+
+                                nu = ngt.inGameObject.GetComponent<Unit>();
+
+                                if (nu == null)
+                                {
+                                    pos.x -= premik[pr, 0]; pos.y -= premik[pr, 1];
+                                    continue;
+                                }
+                                if (nu.player != GameState.selectedPlayer)
+                                    highlight.GetTile<HighlightTile>(pos).changeColor(HighlightTile.TileColor.red);
+                                pos.x -= premik[pr, 0]; pos.y -= premik[pr, 1];
+                            }
+
                             if (gt.inGameObject == null)
                                 ht.changeColor(HighlightTile.TileColor.green);
                             else

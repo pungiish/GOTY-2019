@@ -32,6 +32,11 @@ public static class GameState
         }
     }
 
+    public static void ClearPossibleMoves()
+    {
+        UnitHelpFunctions.PathFinding.Clear(highlight, HighlightTile.TileColor.border, true);
+    }
+
     public static void TileEntered(Vector3Int pos)
     {
         if (selectedUnit != null)
@@ -72,35 +77,46 @@ public static class GameState
             }
             else if (u.player == selectedPlayer)
             {//izbrana enota se menja
-                SelectedUnit = u;
-                selectedTile = posTile;
-                u.ShowPossibleMoves();
+                if (u.ShowPossibleMoves() == true)
+                {
+                    SelectedUnit = u;
+                    selectedTile = posTile;
+                }
+                else
+                    SelectedUnit = null;
             }
             else if(selectedUnit != null) //izbrana enota je od drugega igralca, poskusimo napasti
             {
-                selectedUnit.Fight(u);
+                if(selectedUnit.Fight(u) == true)
+                {
+                    selectedUnit.DrawNoMoveLine();
+                    SelectedUnit = null;
+                }
             }
 
         }
     }
 
-    public static void MovementStart()
+    public static void ActionStart()
     {
         Interlocked.Increment(ref numOfUnitsMoving);
     }
-    public static void MovementEnd(Unit u, GameTile endTile)
+    public static void ActionEnd(Unit u, GameTile endTile)
     {
-        if(endTile.inGameObject != null)
-            GameObject.Destroy(endTile.inGameObject);
+        if (u != null && endTile != null)
+        {
+            if (endTile.inGameObject != null)
+                GameObject.Destroy(endTile.inGameObject);
 
-        endTile.inGameObject = u.gameObject;
-        
+            endTile.inGameObject = u.gameObject;
+        }
+
         Interlocked.Decrement(ref numOfUnitsMoving);
     }
-    public static bool UnitsMoving()
+    public static int NumOfUnitsInAction()
     {
         int val = numOfUnitsMoving; //load je atomarna operacija
-        return val != 0;
+        return val;
     }
     private static int numOfUnitsMoving = 0;
 }

@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
     }
     public Unit AddNewUnit(GameData.UnitType type, Vector3Int pos)
     {
-        Unit u = Instantiate(GameData.UnitPrefabs[0][(int)type]).GetComponent<Unit>();
+        Unit u = Instantiate(GameData.UnitPrefabs[(int)PlayerTribe][(int)type]).GetComponent<Unit>();
         u.Init(this, Map.GetCellCenterWorld(pos), Map.GetTile<GameTile>(pos), type);
         Units.Add(u);
         Map.GetTile<GameTile>(pos).setInGameObject(u.gameObject);

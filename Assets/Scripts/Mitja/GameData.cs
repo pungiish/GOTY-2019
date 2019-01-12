@@ -51,8 +51,8 @@ public static class GameData
     public static int getIndex(int Tribe, UnitType type)
     {
         int iType = (int)type;
-
-        return Tribe * NumOfDifferentUnits + iType;
+        return iType; //zaenkrat imajo zaradi boljse uravnotezenosti vsa plemena enakovredne enote
+        //return Tribe * NumOfDifferentUnits + iType;
     }
 
     public static readonly int[,] MoveWeights = {

@@ -72,7 +72,9 @@ public class GameController : MonoBehaviour {
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            Players.Add(gameObject.AddComponent<PlayerController>().Init("Player1", gameMap, PlayerController.Tribe.A, lineHandler));
+            string player = "player" + i.ToString();
+            Players.Add(gameObject.AddComponent<PlayerController>().
+                Init("", gameMap, (PlayerController.Tribe)PlayerPrefs.GetInt("player" + i.ToString()), lineHandler));
             initPlayer(i, i % 2);
         }
         generateMap();
@@ -102,9 +104,10 @@ public class GameController : MonoBehaviour {
 
         if (GameState.SelectedUnit != null)
             GameState.SelectedUnit.DrawNoMoveLine();
+        GameState.SelectedUnit = null;
 
         GameState.selectedPlayer = Players[currentTurn];
-        GameState.SelectedUnit = null;
+        
 
         Players[currentTurn].StartTurn();
 

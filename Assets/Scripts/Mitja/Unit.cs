@@ -23,6 +23,9 @@ public class Unit : MonoBehaviour
     public PlayerController player { get; private set; }
     private Tilemap Map;
     private HealthBarController healthBar;
+
+    bool fightThisRound = false;
+    int action = 0; //when unit is in action, it cannot go into another action
     
     // Use this for initialization
    void Start () {}
@@ -58,15 +61,25 @@ public class Unit : MonoBehaviour
     public void StartTurn()
     {
         this.MovePoints = GameData.BaseMoveRanges[UnitDataIndex];
+        this.fightThisRound = false;
     }
 
-    public void ShowPossibleMoves()
+    public bool ShowPossibleMoves()
     {
-        UnitHelpFunctions.PathFinding.FindPossibleMoves(TilePos.x, TilePos.y, MovePoints, 0, player.Map, player.HighlightMap);
+        var a = action; //Load is atomic for 32 bit
+        if (a == 0)
+        { //if no action with the unit, possible moves can be shown
+            UnitHelpFunctions.PathFinding.FindPossibleMoves(TilePos.x, TilePos.y, MovePoints, 0, player.Map, player.HighlightMap);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     LinkedList<Vector3Int> movePath = null;
-    bool moving = false;
+    //bool moving = false;
 
     //function changes units position immediately (even if it needs some time to reach it)
     public bool Move(Vector3Int pos)
@@ -80,12 +93,15 @@ public class Unit : MonoBehaviour
         }
         else
         {
+            if(Interlocked.CompareExchange(ref action, 0, 1) == 1)
+            {
+                return false; // enota ze izvaja neko akcijo
+            }
             MovePoints -= player.HighlightMap.GetTile<HighlightTile>(pos).selectedUnitDistance;
             UnitHelpFunctions.PathFinding.Clear(player.HighlightMap, HighlightTile.TileColor.border, true);
-            GameState.MovementStart();
+            GameState.ActionStart();
             TilePos = Map.GetTile<GameTile>(pos); //premaknemo pozicijo se preden pridemo na koncno pozicijo
             this.DrawNoMoveLine();
-            moving = true;
             StartCoroutine(MoveCoroutine());
             return true;
         }
@@ -119,48 +135,20 @@ public class Unit : MonoBehaviour
         }
         this.transform.position = Vector3.MoveTowards(currPos, targetPos, step);
         movePath = null;
-        moving = false;
-        GameState.MovementEnd(this, TilePos);
+        Interlocked.Exchange(ref action, 0);
+        GameState.ActionEnd(this, TilePos);
     }
-    // Update is called once per frame
-    Vector3 dbgpos = new Vector3();
-    void Update () {
-        if(moving == true)
-        {
-            Debug.Log("position: " + (this.transform.position - dbgpos).magnitude + ", time: " + Time.unscaledDeltaTime);
-            dbgpos = this.transform.position;
-        }
-      /*  if (moving == true && movePath != null)
-        {
-            float speed = 3.0f;
-            float step = speed * Time.deltaTime;
-            Vector3 currPos = this.transform.position;
-            Vector3 targetPos = Map.GetCellCenterWorld(movePath.First.Value);
-            
-            if (currPos.Equals(targetPos))
-            {
-                movePath.RemoveFirst();
-                if(movePath.Count == 0) //premik koncan
-                {
-                    movePath = null;
-                    moving = false;
-                    GameState.MovementEnd(this, TilePos);
-                    return;
-                }
-                else
-                {
-                    targetPos = Map.GetCellCenterWorld(movePath.First.Value);
-                }
-            }
-            this.transform.position = Vector3.MoveTowards(currPos, targetPos, step);
-        }*/
-	}
+
+    void Update() { }
     
     public void DrawMoveLineToDest(Vector3Int dest)
     {
         //ce se enota premika, se linija ne kaze in ne spreminja
-        if (moving == true)
-            return;
+        {
+            var a = action;
+            if (a == 1)
+                return;
+        }
 
         movePath = UnitHelpFunctions.PathFinding.GetMovePositions(player.HighlightMap, dest);
         if (movePath == null || movePath.Count < 2)
@@ -186,8 +174,11 @@ public class Unit : MonoBehaviour
         player.LineHandler.DrawLine(null);
     }
     
-    public void Fight(Unit opponent)
+    public bool Fight(Unit opponent)
     {
+        if (this.fightThisRound) //enota lahko napada samo 1x na rundo
+            return false;
+
         int thisX = TilePos.x;
         int thisY = TilePos.y;
         int oppX = opponent.TilePos.x;
@@ -201,7 +192,7 @@ public class Unit : MonoBehaviour
         if (dist > 1)
         {
             if (dist > this.FightRange) //ne pride do napada
-               return;
+               return false;
             else
                 thisDamage = this.BaseRanged;
 
@@ -216,7 +207,15 @@ public class Unit : MonoBehaviour
             oppDamage = opponent.BaseMelee;
         }
 
+        if (Interlocked.CompareExchange(ref action, 1, 0) != 0) //ena akcija ze poteka
+            return false;
+
+        this.fightThisRound = true;
+        this.MovePoints = 0; //po napadu se enota ne more vec premikati
+        GameState.ActionStart();
+        UnitHelpFunctions.PathFinding.Clear(player.HighlightMap, HighlightTile.TileColor.border, true);
         StartCoroutine(FightCoroutine(opponent, thisDamage, oppDamage));
+        return true;
     }
 
     private IEnumerator FightCoroutine(Unit opponent, int thisDamage, int oppDamage)
@@ -243,6 +242,8 @@ public class Unit : MonoBehaviour
                 opponent.healthBar.setHealth(0.0f);
                 opponent.player.UnitDestroyed(opponent);
                 UIController.FightingEnd(false, true);
+                Interlocked.Exchange(ref action, 0);
+                GameState.ActionEnd(null, null);
                 yield break;
             }
             opponent.healthBar.setHealth(opponent.HealthPoints);
@@ -262,11 +263,15 @@ public class Unit : MonoBehaviour
                 this.healthBar.setHealth(0.0f);
                 this.player.UnitDestroyed(this);
                 UIController.FightingEnd(true, false);
+                GameState.ActionEnd(null, null);
+                Interlocked.Exchange(ref action, 0);
                 yield break;
             }
 
             this.healthBar.setHealth(this.HealthPoints);
         }
         UIController.FightingEnd(false, false);
+        GameState.ActionEnd(null, null);
+        Interlocked.Exchange(ref action, 0);
     }
 }

@@ -24,7 +24,18 @@ public class TurnCountdownController : MonoBehaviour {
             yield return new WaitForSeconds(1);
         }
 
+        if (GameState.SelectedUnit != null)
+        {
+            GameState.SelectedUnit.DrawNoMoveLine();
+            GameState.ClearPossibleMoves();
+        }
+        GameState.selectedPlayer = null;
+        GameState.SelectedUnit = null;
+
         countdownTextUI.text = countdownOver;
+
+        while(GameState.NumOfUnitsInAction() > 0)
+            yield return new WaitForSeconds(0.5f);
         gameController.nextTurn();
     }
 }
